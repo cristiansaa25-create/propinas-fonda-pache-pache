@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Propinas - Fonda Pache Pache</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  color:#172033;
+}
+.wrap{max-width:1100px;margin:auto;padding:16px}
+header{
+  background:#8b1e2d;
+  color:white;
+  padding:22px 16px;
+  border-radius:18px;
+  margin-bottom:15px;
+}
+h1{margin:0;font-size:27px}
+.sub{opacity:.9;margin-top:6px}
+
+.toolbar,.cards,.panel{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 5px 18px #00000012;
+}
+.toolbar{
+  padding:14px;
+  margin-bottom:14px;
+  display:flex;
+  gap:10px;
+  align-items:end;
+  flex-wrap:wrap;
+}
+.toolbar label{font-weight:700}
+.toolbar input{
+  padding:10px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:16px;
+}
+button{
+  padding:11px 14px;
+  border:0;
+  border-radius:10px;
+  background:#8b1e2d;
+  color:#fff;
+  font-weight:700;
+}
+
+.cards{
+  padding:12px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+.card{
+  padding:14px;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+}
+.card small{
+  display:block;
+  color:#6b7280;
+  margin-bottom:7px;
+}
+.card strong{font-size:23px}
+
+.panel{padding:15px;margin-bottom:14px}
+h2{font-size:19px;margin:0 0 12px}
+
+.status{
+  padding:10px;
+  border-radius:10px;
+  background:#fff7ed;
+  margin-bottom:12px;
+}
+.ok{background:#ecfdf5;color:#166534}
+.error{background:#fef2f2;color:#991b1b}
+
+.tablewrap{overflow:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+}
+th,td{
+  text-align:left;
+  padding:10px;
+  border-bottom:1px solid #e5e7eb;
+}
+th{color:#6b7280;font-size:13px}
+.tip{font-weight:800;color:#15803d}
+
+.sellerGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:9px;
+}
+.seller{
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+}
+.seller strong{float:right}
+.empty{text-align:center;color:#6b7280;padding:22px}
+
+@media(max-width:720px){
+  .cards{grid-template-columns:1fr 1fr}
+  .card strong{font-size:20px}
+}
+
+@media print{
+  header,.toolbar,.status{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .cards,.panel{box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header>
+<h1>💰 Propinas - Fonda Pache Pache</h1>
+<div class="sub">Control de propinas sincronizado con la caja</div>
+</header>
+
+<div class="toolbar">
+<div>
+<label>Fecha</label><br>
+<input id="fecha" type="date">
+</div>
+
+<button onclick="setToday()">Hoy</button>
+<button onclick="window.print()">Imprimir resumen</button>
+</div>
+
+<div id="status" class="status">
+Conectando con Firebase...
+</div>
+
+<div class="cards">
+
+<div class="card">
+<small>Propinas del día</small>
+<strong id="tips">$0</strong>
+</div>
+
+<div class="card">
+<small>Ventas con propina</small>
+<strong id="count">0</strong>
+</div>
+
+<div class="card">
+<small>Propinas efectivo</small>
+<strong id="cashTips">$0</strong>
+</div>
+
+<div class="card">
+<small>Propinas débito</small>
+<strong id="debitTips">$0</strong>
+</div>
+
+<div class="card">
+<small>Total vendido</small>
+<strong id="salesTotal">$0</strong>
+</div>
+
+<div class="card">
+<small>Subtotal sin propina</small>
+<strong id="subtotal">$0</strong>
+</div>
+
+<div class="card">
+<small>Ventas registradas</small>
+<strong id="allCount">0</strong>
+</div>
+
+<div class="card">
+<small>Promedio de propina</small>
+<strong id="avg">$0</strong>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>Propinas por vendedor</h2>
+<div id="sellers" class="sellerGrid"></div>
+</div>
+
+<div class="panel">
+
+<h2>Detalle de propinas</h2>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Hora</th>
+<th>Vendedor</th>
+<th>Mesa</th>
+<th>Pago</th>
+<th>Subtotal</th>
+<th>Propina</th>
+<th>Total</th>
+</tr>
+</thead>
+
+<tbody id="rows"></tbody>
+
+</table>
+
+<div id="empty" class="empty" style="display:none">
+No hay propinas registradas para esta fecha.
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+
+<script>
+
+const firebaseConfig = {
+ apiKey:"AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
+ authDomain:"caja-pache-pache.firebaseapp.com",
+ projectId:"caja-pache-pache",
+ storageBucket:"caja-pache-pache.firebasestorage.app",
+ messagingSenderId:"59192876859",
+ appId:"1:59192876859:web:b184c5b3e63826bd50a11e",
+ measurementId:"G-QH9ELJJ5NT"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db=firebase.firestore();
+const ventas=db.collection("Ventas");
+
+let data=[];
+
+function money(n){
+ return "$"+Math.round(Number(n)||0).toLocaleString("es-CL");
+}
+
+function localKey(){
+
+ const d=new Date();
+
+ return d.getFullYear()+"-"+
+ String(d.getMonth()+1).padStart(2,"0")+"-"+
+ String(d.getDate()).padStart(2,"0");
+
+}
+
+function setToday(){
+
+ document.getElementById("fecha").value=localKey();
+
+ render();
+
+}
+
+function getTime(v){
+
+ try{
+
+  if(v.createdAt && v.createdAt.toDate){
+
+   return v.createdAt.toDate().toLocaleTimeString(
+    "es-CL",
+    {hour:"2-digit",minute:"2-digit"}
+   );
+
+  }
+
+  if(v.clientTime){
+
+   return new Date(v.clientTime).toLocaleTimeString(
+    "es-CL",
+    {hour:"2-digit",minute:"2-digit"}
+   );
+
+  }
+
+ }catch(e){}
+
+ return "—";
+
+}
+
+function esc(s){
+
+ return String(s ?? "").replace(
+  /[&<>"']/g,
+  m=>({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[m])
+ );
+
+}
+
+function render(){
+
+ const date=document.getElementById("fecha").value;
+
+ const day=data.filter(v=>v.date===date);
+
+ const tipped=day.filter(v=>Number(v.tip||0)>0);
+
+ const tipSum=tipped.reduce(
+  (a,v)=>a+Number(v.tip||0),0
+ );
+
+ const cash=tipped
+ .filter(v=>v.method==="efectivo")
+ .reduce((a,v)=>a+Number(v.tip||0),0);
+
+ const debit=tipped
+ .filter(v=>v.method==="debito")
+ .reduce((a,v)=>a+Number(v.tip||0),0);
+
+ const total=day.reduce(
+  (a,v)=>a+Number(v.total||0),0
+ );
+
+ const sub=day.reduce(
+  (a,v)=>a+Number
