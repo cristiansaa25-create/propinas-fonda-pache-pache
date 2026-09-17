@@ -2,248 +2,113 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Propinas - Fonda Pache Pache</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#172033}
+.wrap{max-width:1100px;margin:auto;padding:16px}
+
+header{
+background:#991f32;color:white;padding:22px 18px;
+border-radius:20px;margin-bottom:16px
+}
+header h1{margin:0;font-size:27px}
+header p{margin:6px 0 0;opacity:.9}
+
+.toolbar,.panel,.cards{
+background:white;border-radius:18px;
+box-shadow:0 5px 18px #00000012
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
-    color: #172033;
+.toolbar{
+padding:15px;margin-bottom:15px;
+display:flex;gap:10px;align-items:end;flex-wrap:wrap
+}
+.toolbar label{font-weight:bold}
+.toolbar input{
+padding:11px;border:1px solid #aaa;
+border-radius:10px;font-size:16px
 }
 
-.wrap {
-    max-width: 1100px;
-    margin: auto;
-    padding: 16px;
+button{
+padding:12px 15px;border:0;border-radius:10px;
+background:#991f32;color:white;font-weight:bold
 }
 
-header {
-    background: #991f32;
-    color: white;
-    padding: 22px 18px;
-    border-radius: 20px;
-    margin-bottom: 18px;
+.status{
+padding:12px;border-radius:12px;
+background:#fff7ed;margin-bottom:15px
+}
+.ok{background:#dcfce7;color:#166534}
+.error{background:#fee2e2;color:#991b1b}
+
+.cards{
+padding:12px;display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;margin-bottom:15px
 }
 
-header h1 {
-    margin: 0;
-    font-size: 28px;
+.card{
+padding:15px;border:1px solid #e5e7eb;
+border-radius:14px
+}
+.card small{
+display:block;color:#6b7280;margin-bottom:8px
+}
+.card strong{font-size:22px}
+.green{color:#15803d}
+
+.panel{padding:15px;margin-bottom:15px}
+.panel h2{margin:0 0 12px;font-size:20px}
+
+.close{
+display:grid;grid-template-columns:repeat(4,1fr);gap:10px
 }
 
-header p {
-    margin: 7px 0 0;
-    opacity: .9;
+.totalbox{
+background:#ecfdf5;border:2px solid #16a34a
+}
+.totalbox strong{color:#15803d}
+
+.sellerGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px
+}
+.seller{
+border:1px solid #e5e7eb;border-radius:12px;padding:12px
+}
+.seller strong{
+display:block;color:#15803d;font-size:20px;margin-top:5px
 }
 
-.toolbar {
-    background: white;
-    padding: 18px;
-    border-radius: 18px;
-    margin-bottom: 16px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+.tablewrap{overflow:auto}
+table{
+width:100%;border-collapse:collapse;min-width:720px
+}
+th,td{
+padding:10px;border-bottom:1px solid #e5e7eb;text-align:left
+}
+th{font-size:13px;color:#6b7280}
+.tip{color:#15803d;font-weight:bold}
 
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: end;
+.general{
+font-weight:bold;background:#f3f4f6
 }
 
-.toolbar label {
-    font-size: 17px;
-    font-weight: bold;
+.empty{text-align:center;color:#6b7280;padding:20px}
+
+@media(max-width:720px){
+.cards,.close{grid-template-columns:1fr 1fr}
+.card strong{font-size:19px}
 }
 
-.toolbar input {
-    padding: 12px;
-    font-size: 17px;
-    border: 2px solid #222;
-    border-radius: 12px;
-}
-
-button {
-    border: none;
-    border-radius: 12px;
-    padding: 13px 18px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    background: #991f32;
-    color: white;
-}
-
-.status {
-    padding: 14px 16px;
-    border-radius: 14px;
-    margin-bottom: 16px;
-    background: #fff7ed;
-    font-size: 17px;
-}
-
-.status.ok {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.status.error {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.cards {
-    background: white;
-    padding: 18px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
-
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 14px;
-
-    margin-bottom: 18px;
-}
-
-.card {
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 18px;
-}
-
-.card small {
-    display: block;
-    color: #6b7280;
-    font-size: 15px;
-    margin-bottom: 10px;
-}
-
-.card strong {
-    font-size: 25px;
-}
-
-.green {
-    color: #15803d;
-}
-
-.panel {
-    background: white;
-    padding: 18px;
-    border-radius: 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
-}
-
-.panel h2 {
-    margin-top: 0;
-}
-
-.seller-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
-    gap: 12px;
-}
-
-.seller-card {
-    border: 1px solid #e5e7eb;
-    padding: 14px;
-    border-radius: 14px;
-}
-
-.seller-name {
-    font-weight: bold;
-}
-
-.seller-total {
-    font-size: 21px;
-    color: #15803d;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-.table-wrap {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 750px;
-}
-
-th,
-td {
-    padding: 11px;
-    border-bottom: 1px solid #e5e7eb;
-    text-align: left;
-}
-
-th {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-td.tip {
-    color: #15803d;
-    font-weight: bold;
-}
-
-.empty {
-    text-align: center;
-    padding: 25px;
-    color: #6b7280;
-}
-
-@media(max-width:750px) {
-
-    .cards {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .card strong {
-        font-size: 22px;
-    }
-
-    header h1 {
-        font-size: 24px;
-    }
-}
-
-@media(max-width:420px) {
-
-    .cards {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .toolbar {
-        align-items: stretch;
-    }
-}
-
-@media print {
-
-    header,
-    .toolbar,
-    .status {
-        display: none;
-    }
-
-    body {
-        background: white;
-    }
-
-    .cards,
-    .panel {
-        box-shadow: none;
-    }
+@media print{
+header,.toolbar,.status{display:none!important}
+body{background:white}
+.panel,.cards{box-shadow:none}
 }
 </style>
 </head>
@@ -253,127 +118,221 @@ td.tip {
 <div class="wrap">
 
 <header>
-    <h1>💰 Propinas - Fonda Pache Pache</h1>
-    <p>Control de propinas sincronizado con la caja</p>
+<h1>💰 Propinas - Fonda Pache Pache</h1>
+<p>Control de propinas, recaudación y cierre diario</p>
 </header>
-
 
 <div class="toolbar">
 
-    <div>
-        <label for="fecha">Fecha</label><br>
-        <input type="date" id="fecha">
-    </div>
-
-    <button onclick="setToday()">
-        Hoy
-    </button>
-
-    <button onclick="window.print()">
-        Imprimir resumen
-    </button>
-
+<div>
+<label>Fecha</label><br>
+<input id="fecha" type="date">
 </div>
 
+<button onclick="setToday()">Hoy</button>
+
+<button onclick="window.print()">
+Imprimir resumen
+</button>
+
+</div>
 
 <div id="status" class="status">
-    Conectando con Firebase...
+Conectando con Firebase...
 </div>
 
+
+<!-- RESUMEN PRINCIPAL -->
 
 <div class="cards">
 
-    <div class="card">
-        <small>Propinas del día</small>
-        <strong id="tips" class="green">$0</strong>
-    </div>
+<div class="card">
+<small>Propinas del día</small>
+<strong id="tips" class="green">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Ventas con propina</small>
-        <strong id="count">0</strong>
-    </div>
+<div class="card">
+<small>Ventas con propina</small>
+<strong id="tipCount">0</strong>
+</div>
 
-    <div class="card">
-        <small>Propinas efectivo</small>
-        <strong id="cashTips">$0</strong>
-    </div>
+<div class="card">
+<small>Propinas efectivo</small>
+<strong id="cashTips">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Propinas débito</small>
-        <strong id="debitTips">$0</strong>
-    </div>
+<div class="card">
+<small>Propinas débito</small>
+<strong id="debitTips">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Total vendido</small>
-        <strong id="salesTotal">$0</strong>
-    </div>
+<div class="card">
+<small>Total vendido</small>
+<strong id="salesTotal">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Subtotal sin propina</small>
-        <strong id="subtotal">$0</strong>
-    </div>
+<div class="card">
+<small>Subtotal sin propina</small>
+<strong id="subtotal">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Ventas registradas</small>
-        <strong id="allCount">0</strong>
-    </div>
+<div class="card">
+<small>Ventas registradas</small>
+<strong id="saleCount">0</strong>
+</div>
 
-    <div class="card">
-        <small>Promedio de propina</small>
-        <strong id="avg">$0</strong>
-    </div>
+<div class="card">
+<small>Promedio de propina</small>
+<strong id="averageTip">$0</strong>
+</div>
 
 </div>
 
 
+<!-- CIERRE DEL DIA -->
+
 <div class="panel">
 
-    <h2>Propinas por vendedor</h2>
+<h2>📊 Cierre del día</h2>
 
-    <div id="sellers" class="seller-grid">
+<div class="close">
 
-        <div class="empty">
-            Esperando información...
-        </div>
+<div class="card">
+<small>💵 Recaudado efectivo</small>
+<strong id="cashTotal">$0</strong>
+</div>
 
-    </div>
+<div class="card">
+<small>💳 Recaudado débito</small>
+<strong id="debitTotal">$0</strong>
+</div>
+
+<div class="card">
+<small>💵 Propina efectivo</small>
+<strong id="closeCashTip">$0</strong>
+</div>
+
+<div class="card">
+<small>💳 Propina débito</small>
+<strong id="closeDebitTip">$0</strong>
+</div>
+
+<div class="card">
+<small>🧾 Venta sin propinas</small>
+<strong id="closeSubtotal">$0</strong>
+</div>
+
+<div class="card">
+<small>💰 Propinas</small>
+<strong id="closeTips">$0</strong>
+</div>
+
+<div class="card">
+<small>🛒 Cantidad de ventas</small>
+<strong id="closeCount">0</strong>
+</div>
+
+<div class="card totalbox">
+<small>💰 TOTAL RECAUDADO DEL DÍA</small>
+<strong id="closeTotal">$0</strong>
+</div>
+
+</div>
+</div>
+
+
+<!-- RESUMEN DE TODOS LOS DIAS -->
+
+<div class="panel">
+
+<h2>📅 Recaudación por día</h2>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Efectivo</th>
+<th>Débito</th>
+<th>Propinas</th>
+<th>Ventas</th>
+<th>Total día</th>
+</tr>
+</thead>
+
+<tbody id="dailyRows"></tbody>
+
+<tfoot>
+
+<tr class="general">
+
+<td>TOTAL GENERAL</td>
+
+<td id="generalCash">$0</td>
+
+<td id="generalDebit">$0</td>
+
+<td id="generalTips" class="tip">$0</td>
+
+<td id="generalCount">0</td>
+
+<td id="generalTotal" class="tip">$0</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+</div>
 
 </div>
 
 
+<!-- VENDEDORES -->
+
 <div class="panel">
 
-    <h2>Detalle de propinas</h2>
+<h2>👤 Propinas por vendedor</h2>
 
-    <div class="table-wrap">
+<div id="sellers" class="sellerGrid"></div>
 
-        <table>
+</div>
 
-            <thead>
-                <tr>
-                    <th>Hora</th>
-                    <th>Vendedor</th>
-                    <th>Mesa</th>
-                    <th>Pago</th>
-                    <th>Subtotal</th>
-                    <th>Propina</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
 
-            <tbody id="rows"></tbody>
+<!-- DETALLE -->
 
-        </table>
+<div class="panel">
 
-        <div
-            id="empty"
-            class="empty"
-            style="display:none"
-        >
-            No hay propinas registradas para esta fecha.
-        </div>
+<h2>🧾 Detalle de propinas</h2>
 
-    </div>
+<div class="tablewrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Hora</th>
+<th>Vendedor</th>
+<th>Mesa</th>
+<th>Pago</th>
+<th>Subtotal</th>
+<th>Propina</th>
+<th>Total</th>
+</tr>
+</thead>
+
+<tbody id="detailRows"></tbody>
+
+</table>
+
+<div id="empty" class="empty">
+No hay propinas para esta fecha.
+</div>
+
+</div>
 
 </div>
 
@@ -383,621 +342,696 @@ td.tip {
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 
-
 <script>
 
-/* ================================
-   CONFIGURACIÓN FIREBASE
-================================ */
+/* FIREBASE */
 
-const firebaseConfig = {
+const firebaseConfig={
 
-    apiKey:
-    "AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
+apiKey:"AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
 
-    authDomain:
-    "caja-pache-pache.firebaseapp.com",
+authDomain:"caja-pache-pache.firebaseapp.com",
 
-    projectId:
-    "caja-pache-pache",
+projectId:"caja-pache-pache",
 
-    storageBucket:
-    "caja-pache-pache.firebasestorage.app",
+storageBucket:"caja-pache-pache.firebasestorage.app",
 
-    messagingSenderId:
-    "59192876859",
+messagingSenderId:"59192876859",
 
-    appId:
-    "1:59192876859:web:b184c5b3e63826bd50a11e",
+appId:"1:59192876859:web:b184c5b3e63826bd50a11e",
 
-    measurementId:
-    "G-QH9ELJJ5NT"
+measurementId:"G-QH9ELJJ5NT"
 
 };
 
-
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
+const db=firebase.firestore();
 
-const ventas = db.collection("Ventas");
+const ventas=db.collection("Ventas");
 
-let data = [];
+let allSales=[];
 
 
-/* ================================
-   FUNCIONES
-================================ */
+/* UTILIDADES */
 
-function money(value) {
+function money(value){
 
-    const numero = Number(value) || 0;
-
-    return "$" +
-        Math.round(numero)
-        .toLocaleString("es-CL");
+return "$"+
+Math.round(Number(value)||0)
+.toLocaleString("es-CL");
 
 }
 
 
-function localDateKey() {
+function todayKey(){
 
-    const d = new Date();
+const d=new Date();
 
-    const year = d.getFullYear();
-
-    const month =
-        String(d.getMonth() + 1)
-        .padStart(2,"0");
-
-    const day =
-        String(d.getDate())
-        .padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
 
 }
 
 
-function setToday() {
+function setToday(){
 
-    document.getElementById("fecha").value =
-        localDateKey();
+document.getElementById("fecha").value=todayKey();
 
-    render();
-
-}
-
-
-function escapeHTML(value) {
-
-    return String(value ?? "")
-    .replace(
-        /[&<>"']/g,
-        function(character) {
-
-            const map = {
-
-                "&":"&amp;",
-                "<":"&lt;",
-                ">":"&gt;",
-                '"':"&quot;",
-                "'":"&#039;"
-
-            };
-
-            return map[character];
-
-        }
-    );
+render();
 
 }
 
 
-function getSaleTime(sale) {
+function html(value){
 
-    try {
+return String(value??"")
+.replace(/[&<>"']/g,function(c){
 
-        if (
-            sale.createdAt &&
-            typeof sale.createdAt.toDate === "function"
-        ) {
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[c];
 
-            return sale.createdAt
-            .toDate()
-            .toLocaleTimeString(
-                "es-CL",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            );
-
-        }
-
-
-        if (sale.clientTime) {
-
-            return new Date(
-                sale.clientTime
-            ).toLocaleTimeString(
-                "es-CL",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            );
-
-        }
-
-    }
-    catch(error) {
-
-        console.log(error);
-
-    }
-
-    return "—";
+});
 
 }
 
 
-/* ================================
-   MOSTRAR DATOS
-================================ */
+function displayDate(date){
 
-function render() {
+if(!/^\d{4}-\d{2}-\d{2}$/.test(date))
+return date;
 
-    const selectedDate =
-        document.getElementById("fecha").value;
+const p=date.split("-");
 
-
-    const daySales =
-        data.filter(function(sale) {
-
-            return sale.date === selectedDate;
-
-        });
-
-
-    const salesWithTip =
-        daySales.filter(function(sale) {
-
-            return Number(sale.tip || 0) > 0;
-
-        });
-
-
-    const totalTips =
-        salesWithTip.reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.tip || 0);
-
-            },
-            0
-        );
-
-
-    const cashTips =
-        salesWithTip
-        .filter(function(sale) {
-
-            return String(
-                sale.method || ""
-            ).toLowerCase() === "efectivo";
-
-        })
-        .reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.tip || 0);
-
-            },
-            0
-        );
-
-
-    const debitTips =
-        salesWithTip
-        .filter(function(sale) {
-
-            return String(
-                sale.method || ""
-            ).toLowerCase() === "debito";
-
-        })
-        .reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.tip || 0);
-
-            },
-            0
-        );
-
-
-    const totalSales =
-        daySales.reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.total || 0);
-
-            },
-            0
-        );
-
-
-    const subtotalSales =
-        daySales.reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.subtotal || 0);
-
-            },
-            0
-        );
-
-
-    const averageTip =
-        salesWithTip.length > 0
-        ? totalTips / salesWithTip.length
-        : 0;
-
-
-    document.getElementById("tips")
-        .textContent =
-        money(totalTips);
-
-
-    document.getElementById("count")
-        .textContent =
-        salesWithTip.length;
-
-
-    document.getElementById("cashTips")
-        .textContent =
-        money(cashTips);
-
-
-    document.getElementById("debitTips")
-        .textContent =
-        money(debitTips);
-
-
-    document.getElementById("salesTotal")
-        .textContent =
-        money(totalSales);
-
-
-    document.getElementById("subtotal")
-        .textContent =
-        money(subtotalSales);
-
-
-    document.getElementById("allCount")
-        .textContent =
-        daySales.length;
-
-
-    document.getElementById("avg")
-        .textContent =
-        money(averageTip);
-
-
-    renderSellers(salesWithTip);
-
-    renderTable(salesWithTip);
+return p[2]+"/"+p[1]+"/"+p[0];
 
 }
 
 
-/* ================================
-   VENDEDORES
-================================ */
+function saleTime(sale){
 
-function renderSellers(sales) {
+try{
 
-    const sellers = {};
+if(sale.createdAt &&
+typeof sale.createdAt.toDate==="function"){
 
+return sale.createdAt.toDate()
+.toLocaleTimeString("es-CL",{
+hour:"2-digit",
+minute:"2-digit"
+});
 
-    sales.forEach(function(sale) {
+}
 
-        let name =
-            String(
-                sale.seller ||
-                "Sin vendedor"
-            ).trim();
+if(sale.clientTime){
 
+return new Date(sale.clientTime)
+.toLocaleTimeString("es-CL",{
+hour:"2-digit",
+minute:"2-digit"
+});
 
-        if (!name) {
+}
 
-            name = "Sin vendedor";
+}catch(e){}
 
-        }
-
-
-        if (!sellers[name]) {
-
-            sellers[name] = {
-                tip:0,
-                sales:0
-            };
-
-        }
-
-
-        sellers[name].tip +=
-            Number(sale.tip || 0);
-
-
-        sellers[name].sales++;
-
-    });
-
-
-    const container =
-        document.getElementById("sellers");
-
-
-    const entries =
-        Object.entries(sellers)
-        .sort(function(a,b) {
-
-            return b[1].tip - a[1].tip;
-
-        });
-
-
-    if (entries.length === 0) {
-
-        container.innerHTML =
-        '<div class="empty">' +
-        'No hay propinas para esta fecha.' +
-        '</div>';
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        entries.map(
-            function(entry) {
-
-                const name = entry[0];
-
-                const info = entry[1];
-
-
-                return `
-
-                <div class="seller-card">
-
-                    <div class="seller-name">
-                        ${escapeHTML(name)}
-                    </div>
-
-                    <div class="seller-total">
-                        ${money(info.tip)}
-                    </div>
-
-                    <small>
-                        ${info.sales}
-                        venta${info.sales === 1 ? "" : "s"}
-                        con propina
-                    </small>
-
-                </div>
-
-                `;
-
-            }
-        )
-        .join("");
+return "—";
 
 }
 
 
-/* ================================
-   TABLA
-================================ */
+/* RENDER PRINCIPAL */
 
-function renderTable(sales) {
+function render(){
 
-    const rows =
-        document.getElementById("rows");
+const selected=
+document.getElementById("fecha").value;
 
-    const empty =
-        document.getElementById("empty");
+const daySales=
+allSales.filter(function(sale){
 
+return sale.date===selected;
 
-    const sorted =
-        [...sales].sort(
-            function(a,b) {
-
-                const aTime =
-                    String(
-                        a.clientTime || ""
-                    );
-
-                const bTime =
-                    String(
-                        b.clientTime || ""
-                    );
-
-                return bTime.localeCompare(aTime);
-
-            }
-        );
+});
 
 
-    if (sorted.length === 0) {
+const tipped=
+daySales.filter(function(sale){
 
-        rows.innerHTML = "";
+return Number(sale.tip||0)>0;
 
-        empty.style.display = "block";
-
-        return;
-
-    }
+});
 
 
-    empty.style.display = "none";
+const tips=
+tipped.reduce(function(sum,sale){
+
+return sum+Number(sale.tip||0);
+
+},0);
 
 
-    rows.innerHTML =
-        sorted.map(
-            function(sale) {
+const cashTips=
+tipped
+.filter(function(sale){
 
-                let payment =
-                    sale.method || "—";
+return String(sale.method||"")
+.toLowerCase()==="efectivo";
 
+})
+.reduce(function(sum,sale){
 
-                if (
-                    String(payment)
-                    .toLowerCase() === "efectivo"
-                ) {
+return sum+Number(sale.tip||0);
 
-                    payment = "Efectivo";
-
-                }
+},0);
 
 
-                if (
-                    String(payment)
-                    .toLowerCase() === "debito"
-                ) {
+const debitTips=
+tipped
+.filter(function(sale){
 
-                    payment = "Débito";
+return String(sale.method||"")
+.toLowerCase()==="debito";
 
-                }
+})
+.reduce(function(sum,sale){
+
+return sum+Number(sale.tip||0);
+
+},0);
 
 
-                return `
+const subtotal=
+daySales.reduce(function(sum,sale){
 
-                <tr>
+return sum+Number(sale.subtotal||0);
 
-                    <td>
-                        ${getSaleTime(sale)}
-                    </td>
+},0);
 
-                    <td>
-                        ${escapeHTML(
-                            sale.seller || "—"
-                        )}
-                    </td>
 
-                    <td>
-                        ${escapeHTML(
-                            sale.table || "—"
-                        )}
-                    </td>
+const total=
+daySales.reduce(function(sum,sale){
 
-                    <td>
-                        ${escapeHTML(payment)}
-                    </td>
+return sum+Number(sale.total||0);
 
-                    <td>
-                        ${money(sale.subtotal)}
-                    </td>
+},0);
 
-                    <td class="tip">
-                        ${money(sale.tip)}
-                    </td>
 
-                    <td>
-                        ${money(sale.total)}
-                    </td>
+document.getElementById("tips").textContent=
+money(tips);
 
-                </tr>
+document.getElementById("tipCount").textContent=
+tipped.length;
 
-                `;
+document.getElementById("cashTips").textContent=
+money(cashTips);
 
-            }
-        )
-        .join("");
+document.getElementById("debitTips").textContent=
+money(debitTips);
+
+document.getElementById("salesTotal").textContent=
+money(total);
+
+document.getElementById("subtotal").textContent=
+money(subtotal);
+
+document.getElementById("saleCount").textContent=
+daySales.length;
+
+document.getElementById("averageTip").textContent=
+money(
+tipped.length
+?tips/tipped.length
+:0
+);
+
+
+renderClose(daySales);
+
+renderDaily();
+
+renderSellers(tipped);
+
+renderDetails(tipped);
 
 }
 
 
-/* ================================
-   CAMBIO DE FECHA
-================================ */
+/* CIERRE DIARIO */
+
+function renderClose(sales){
+
+let cash=0;
+
+let debit=0;
+
+let tips=0;
+
+let cashTip=0;
+
+let debitTip=0;
+
+let subtotal=0;
+
+let total=0;
+
+
+sales.forEach(function(sale){
+
+const method=
+String(sale.method||"").toLowerCase();
+
+const saleTotal=
+Number(sale.total||0);
+
+const saleTip=
+Number(sale.tip||0);
+
+
+if(method==="efectivo"){
+
+cash+=saleTotal;
+
+cashTip+=saleTip;
+
+}
+
+
+if(method==="debito"){
+
+debit+=saleTotal;
+
+debitTip+=saleTip;
+
+}
+
+
+tips+=saleTip;
+
+subtotal+=Number(sale.subtotal||0);
+
+total+=saleTotal;
+
+});
+
+
+document.getElementById("cashTotal").textContent=
+money(cash);
+
+document.getElementById("debitTotal").textContent=
+money(debit);
+
+document.getElementById("closeCashTip").textContent=
+money(cashTip);
+
+document.getElementById("closeDebitTip").textContent=
+money(debitTip);
+
+document.getElementById("closeSubtotal").textContent=
+money(subtotal);
+
+document.getElementById("closeTips").textContent=
+money(tips);
+
+document.getElementById("closeCount").textContent=
+sales.length;
+
+document.getElementById("closeTotal").textContent=
+money(total);
+
+}
+
+
+/* RESUMEN POR TODOS LOS DIAS */
+
+function renderDaily(){
+
+const days={};
+
+
+allSales.forEach(function(sale){
+
+const date=sale.date||"Sin fecha";
+
+
+if(!days[date]){
+
+days[date]={
+cash:0,
+debit:0,
+tips:0,
+count:0,
+total:0
+};
+
+}
+
+
+const method=
+String(sale.method||"").toLowerCase();
+
+const saleTotal=
+Number(sale.total||0);
+
+
+if(method==="efectivo"){
+
+days[date].cash+=saleTotal;
+
+}
+
+
+if(method==="debito"){
+
+days[date].debit+=saleTotal;
+
+}
+
+
+days[date].tips+=
+Number(sale.tip||0);
+
+days[date].total+=saleTotal;
+
+days[date].count++;
+
+});
+
+
+const dates=
+Object.keys(days).sort();
+
+
+let gCash=0;
+
+let gDebit=0;
+
+let gTips=0;
+
+let gCount=0;
+
+let gTotal=0;
+
+
+const rows=
+dates.map(function(date){
+
+const d=days[date];
+
+
+gCash+=d.cash;
+
+gDebit+=d.debit;
+
+gTips+=d.tips;
+
+gCount+=d.count;
+
+gTotal+=d.total;
+
+
+return `
+
+<tr>
+
+<td>
+<strong>${displayDate(date)}</strong>
+</td>
+
+<td>${money(d.cash)}</td>
+
+<td>${money(d.debit)}</td>
+
+<td class="tip">
+${money(d.tips)}
+</td>
+
+<td>${d.count}</td>
+
+<td>
+<strong>${money(d.total)}</strong>
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+
+document.getElementById("dailyRows").innerHTML=
+rows;
+
+
+document.getElementById("generalCash").textContent=
+money(gCash);
+
+document.getElementById("generalDebit").textContent=
+money(gDebit);
+
+document.getElementById("generalTips").textContent=
+money(gTips);
+
+document.getElementById("generalCount").textContent=
+gCount;
+
+document.getElementById("generalTotal").textContent=
+money(gTotal);
+
+}
+
+
+/* VENDEDORES */
+
+function renderSellers(sales){
+
+const sellers={};
+
+
+sales.forEach(function(sale){
+
+const name=
+String(sale.seller||"Sin vendedor").trim()
+||"Sin vendedor";
+
+
+if(!sellers[name]){
+
+sellers[name]={
+tips:0,
+count:0
+};
+
+}
+
+
+sellers[name].tips+=
+Number(sale.tip||0);
+
+sellers[name].count++;
+
+});
+
+
+const entries=
+Object.entries(sellers)
+.sort(function(a,b){
+
+return b[1].tips-a[1].tips;
+
+});
+
+
+if(entries.length===0){
+
+document.getElementById("sellers").innerHTML=
+'<div class="empty">Sin propinas para esta fecha.</div>';
+
+return;
+
+}
+
+
+document.getElementById("sellers").innerHTML=
+
+entries.map(function(entry){
+
+const name=entry[0];
+
+const info=entry[1];
+
+
+return `
+
+<div class="seller">
+
+${html(name)}
+
+<strong>
+${money(info.tips)}
+</strong>
+
+<small>
+${info.count}
+venta${info.count===1?"":"s"} con propina
+</small>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* DETALLE */
+
+function renderDetails(sales){
+
+const rows=
+document.getElementById("detailRows");
+
+const empty=
+document.getElementById("empty");
+
+
+if(sales.length===0){
+
+rows.innerHTML="";
+
+empty.style.display="block";
+
+return;
+
+}
+
+
+empty.style.display="none";
+
+
+const sorted=[...sales].sort(function(a,b){
+
+return String(b.clientTime||"")
+.localeCompare(String(a.clientTime||""));
+
+});
+
+
+rows.innerHTML=
+
+sorted.map(function(sale){
+
+let method=
+String(sale.method||"");
+
+
+if(method.toLowerCase()==="efectivo")
+method="Efectivo";
+
+if(method.toLowerCase()==="debito")
+method="Débito";
+
+
+return `
+
+<tr>
+
+<td>${saleTime(sale)}</td>
+
+<td>${html(sale.seller||"—")}</td>
+
+<td>${html(sale.table||"—")}</td>
+
+<td>${html(method||"—")}</td>
+
+<td>${money(sale.subtotal)}</td>
+
+<td class="tip">
+${money(sale.tip)}
+</td>
+
+<td>${money(sale.total)}</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+
+/* CAMBIO DE FECHA */
 
 document
 .getElementById("fecha")
-.addEventListener(
-    "change",
-    render
-);
+.addEventListener("change",render);
 
 
 setToday();
 
 
-/* ================================
-   SINCRONIZACIÓN FIRESTORE
-================================ */
-
-const statusBox =
-    document.getElementById("status");
-
+/* FIRESTORE EN TIEMPO REAL */
 
 ventas.onSnapshot(
 
-    function(snapshot) {
+function(snapshot){
 
-        data =
-            snapshot.docs.map(
-                function(documento) {
+allSales=
+snapshot.docs.map(function(doc){
 
-                    return {
-                        id:documento.id,
-                        ...documento.data()
-                    };
+return {
+id:doc.id,
+...doc.data()
+};
 
-                }
-            );
+});
 
 
-        statusBox.textContent =
-            "✓ Conectado - " +
-            data.length +
-            " ventas sincronizadas";
+const status=
+document.getElementById("status");
 
 
-        statusBox.className =
-            "status ok";
+status.textContent=
+"✓ Conectado - "+
+allSales.length+
+" ventas sincronizadas";
 
 
-        render();
-
-    },
-
-
-    function(error) {
-
-        console.error(
-            "Error Firestore:",
-            error
-        );
+status.className=
+"status ok";
 
 
-        statusBox.textContent =
-            "Error al conectar con Firebase: " +
-            error.message;
+render();
+
+},
 
 
-        statusBox.className =
-            "status error";
+function(error){
 
-    }
+console.error(error);
+
+
+const status=
+document.getElementById("status");
+
+
+status.textContent=
+"Error Firebase: "+
+error.message;
+
+
+status.className=
+"status error";
+
+}
 
 );
 
