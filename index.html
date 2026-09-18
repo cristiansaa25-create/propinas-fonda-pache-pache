@@ -931,7 +931,7 @@ document.getElementById("fecha").value;
 const daySales=
 allSales.filter(function(sale){
 
-return normalizeDate(sale.date)===selected;
+return saleDate(sale)===selected;
 
 });
 
