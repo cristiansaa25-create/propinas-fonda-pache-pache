@@ -98,7 +98,7 @@ margin-bottom:8px
 }
 
 .card strong{font-size:22px}
-.green{color:#15803d}
+.green,.tip{color:#15803d}
 
 .panel{
 padding:15px;
@@ -176,11 +176,6 @@ text-align:left
 th{
 font-size:13px;
 color:#6b7280
-}
-
-.tip{
-color:#15803d;
-font-weight:bold
 }
 
 .general{
@@ -296,9 +291,6 @@ Imprimir resumen
 Conectando con Firebase...
 </div>
 
-
-<!-- RESUMEN -->
-
 <div class="cards">
 
 <div class="card">
@@ -342,9 +334,6 @@ Conectando con Firebase...
 </div>
 
 </div>
-
-
-<!-- CIERRE -->
 
 <div class="panel">
 
@@ -393,11 +382,7 @@ Conectando con Firebase...
 </div>
 
 </div>
-
 </div>
-
-
-<!-- RECAUDACION POR DIA -->
 
 <div class="panel">
 
@@ -425,15 +410,10 @@ Conectando con Firebase...
 <tr class="general">
 
 <td>TOTAL GENERAL</td>
-
 <td id="generalCash">$0</td>
-
 <td id="generalDebit">$0</td>
-
 <td id="generalTips" class="tip">$0</td>
-
 <td id="generalCount">0</td>
-
 <td id="generalTotal" class="tip">$0</td>
 
 </tr>
@@ -443,11 +423,7 @@ Conectando con Firebase...
 </table>
 
 </div>
-
 </div>
-
-
-<!-- PRODUCTOS -->
 
 <div class="panel">
 
@@ -475,54 +451,28 @@ onclick="setProductScope('all')">
 
 </div>
 
-
 <div class="productStats">
 
 <div class="card">
-
 <small>🏆 Más vendido</small>
-
 <strong id="topProduct">—</strong>
-
-<small id="topProductQty">
-0 unidades
-</small>
-
+<small id="topProductQty">0 unidades</small>
 </div>
 
-
 <div class="card">
-
 <small>📉 Menos vendido</small>
-
 <strong id="lowProduct">—</strong>
-
-<small id="lowProductQty">
-0 unidades
-</small>
-
+<small id="lowProductQty">0 unidades</small>
 </div>
-
 
 <div class="card">
-
 <small>📦 Unidades totales</small>
-
-<strong id="productUnits">
-0
-</strong>
-
+<strong id="productUnits">0</strong>
 </div>
-
 
 <div class="card totalbox">
-
 <small>💰 Total vendido en productos</small>
-
-<strong id="productRevenue">
-$0
-</strong>
-
+<strong id="productRevenue">$0</strong>
 </div>
 
 </div>
@@ -552,17 +502,9 @@ $0
 
 <tr class="general">
 
-<td colspan="2">
-TOTAL
-</td>
-
-<td id="productTableUnits">
-0
-</td>
-
-<td id="productTableRevenue">
-$0
-</td>
+<td colspan="2">TOTAL</td>
+<td id="productTableUnits">0</td>
+<td id="productTableRevenue">$0</td>
 
 </tr>
 
@@ -581,7 +523,6 @@ No existen productos vendidos para este período.
 
 </div>
 
-
 <div class="chartBox">
 
 <div class="chartTitle">
@@ -594,9 +535,6 @@ No existen productos vendidos para este período.
 
 </div>
 
-
-<!-- VENDEDORES -->
-
 <div class="panel">
 
 <h2>👤 Propinas por vendedor</h2>
@@ -604,9 +542,6 @@ No existen productos vendidos para este período.
 <div id="sellers" class="sellerGrid"></div>
 
 </div>
-
-
-<!-- DETALLE -->
 
 <div class="panel">
 
@@ -639,18 +574,14 @@ No hay propinas para esta fecha.
 </div>
 
 </div>
-
 </div>
 
 </div>
-
 
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 
 <script>
-
-/* FIREBASE */
 
 const firebaseConfig={
 
@@ -680,8 +611,6 @@ let allSales=[];
 
 let productScope="day";
 
-
-/* UTILIDADES */
 
 function money(value){
 
@@ -757,6 +686,128 @@ return p[2]+"/"+p[1]+"/"+p[0];
 }
 
 
+function normalizeDate(value){
+
+let fecha=
+String(value||"").trim();
+
+if(!fecha){
+return null;
+}
+
+if(/^\d{4}-\d{2}-\d{2}$/.test(fecha)){
+
+return fecha;
+
+}
+
+if(/^\d{2}\/\d{2}\/\d{4}$/.test(fecha)){
+
+const p=fecha.split("/");
+
+return p[2]+"-"+p[1]+"-"+p[0];
+
+}
+
+if(/^\d{2}-\d{2}-\d{4}$/.test(fecha)){
+
+const p=fecha.split("-");
+
+return p[2]+"-"+p[1]+"-"+p[0];
+
+}
+
+return null;
+
+}
+
+
+/* =========================================
+   FECHA ÚNICA PARA TODAS LAS SECCIONES
+========================================= */
+
+function saleDate(sale){
+
+const direct=
+normalizeDate(sale && sale.date);
+
+if(direct){
+
+return direct;
+
+}
+
+try{
+
+if(
+sale.createdAt &&
+typeof sale.createdAt.toDate==="function"
+){
+
+const d=
+sale.createdAt.toDate();
+
+return d.getFullYear()+"-"+
+
+String(d.getMonth()+1)
+.padStart(2,"0")+"-"+
+
+String(d.getDate())
+.padStart(2,"0");
+
+}
+
+}catch(e){}
+
+
+try{
+
+if(sale.clientTime){
+
+const d=
+new Date(sale.clientTime);
+
+if(!isNaN(d.getTime())){
+
+return d.getFullYear()+"-"+
+
+String(d.getMonth()+1)
+.padStart(2,"0")+"-"+
+
+String(d.getDate())
+.padStart(2,"0");
+
+}
+
+}
+
+}catch(e){}
+
+return null;
+
+}
+
+
+function validSale(sale){
+
+const fecha=
+saleDate(sale);
+
+if(!fecha){
+return false;
+}
+
+/* ELIMINAMOS 16/09 Y TODO LO ANTERIOR */
+
+if(fecha < "2026-09-17"){
+return false;
+}
+
+return true;
+
+}
+
+
 function saleTime(sale){
 
 try{
@@ -767,9 +818,7 @@ typeof sale.createdAt.toDate==="function"
 ){
 
 return sale.createdAt
-
 .toDate()
-
 .toLocaleTimeString(
 "es-CL",
 {
@@ -783,7 +832,6 @@ minute:"2-digit"
 if(sale.clientTime){
 
 return new Date(sale.clientTime)
-
 .toLocaleTimeString(
 "es-CL",
 {
@@ -801,132 +849,33 @@ return "—";
 }
 
 
-/* =================================
-   NORMALIZAR FECHA
-================================= */
+function setText(id,value){
 
-function normalizeDate(value){
-
-let fecha=
-String(value||"").trim();
-
-if(!fecha){
-return null;
-}
-
-/* YYYY-MM-DD */
-
-if(/^\d{4}-\d{2}-\d{2}$/.test(fecha)){
-
-return fecha;
-
-}
-
-/* DD/MM/YYYY */
-
-if(/^\d{2}\/\d{2}\/\d{4}$/.test(fecha)){
-
-const p=fecha.split("/");
-
-return p[2]+"-"+p[1]+"-"+p[0];
-
-}
-
-/* DD-MM-YYYY */
-
-if(/^\d{2}-\d{2}-\d{4}$/.test(fecha)){
-
-const p=fecha.split("-");
-
-return p[2]+"-"+p[1]+"-"+p[0];
-
-}
-
-return null;
-
-}
-/* =================================
-   FECHA REAL DE LA VENTA
-================================= */
-
-function saleDate(sale){
-
-  /* 1. Fecha guardada normalmente */
-  const directDate = normalizeDate(sale.date);
-
-  if(directDate){
-    return directDate;
-  }
-
-  /* 2. Fecha creada por Firebase */
-  try{
-
-    if(
-      sale.createdAt &&
-      typeof sale.createdAt.toDate === "function"
-    ){
-
-      const d = sale.createdAt.toDate();
-
-      return d.getFullYear()+"-"+
-        String(d.getMonth()+1).padStart(2,"0")+"-"+
-        String(d.getDate()).padStart(2,"0");
-    }
-
-  }catch(e){}
-
-  /* 3. Fecha registrada por el dispositivo */
-  try{
-
-    if(sale.clientTime){
-
-      const d = new Date(sale.clientTime);
-
-      if(!isNaN(d.getTime())){
-
-        return d.getFullYear()+"-"+
-          String(d.getMonth()+1).padStart(2,"0")+"-"+
-          String(d.getDate()).padStart(2,"0");
-      }
-    }
-
-  }catch(e){}
-
-  return null;
-}
-
-/* =================================
-   VALIDAR VENTA
-================================= */
-
-function validSale(sale){
-
-const fecha=
-saleDate(sale);
-
-/* SIN FECHA */
-
-if(!fecha){
-return false;
-}
-
-/* 16/09 Y TODO LO ANTERIOR */
-
-if(fecha < "2026-09-17"){
-return false;
-}
-
-return true;
+document.getElementById(id).textContent=
+value;
 
 }
 
 
-/* RESUMEN */
+function setMoney(id,value){
+
+setText(
+id,
+money(value)
+);
+
+}
+
+
+/* =========================================
+   RESUMEN DEL DÍA
+========================================= */
 
 function render(){
 
 const selected=
 document.getElementById("fecha").value;
+
 
 const daySales=
 allSales.filter(function(sale){
@@ -947,7 +896,8 @@ return Number(sale.tip||0)>0;
 const tips=
 tipped.reduce(function(sum,sale){
 
-return sum+Number(sale.tip||0);
+return sum+
+Number(sale.tip||0);
 
 },0);
 
@@ -964,7 +914,8 @@ return String(sale.method||"")
 
 .reduce(function(sum,sale){
 
-return sum+Number(sale.tip||0);
+return sum+
+Number(sale.tip||0);
 
 },0);
 
@@ -981,7 +932,8 @@ return String(sale.method||"")
 
 .reduce(function(sum,sale){
 
-return sum+Number(sale.tip||0);
+return sum+
+Number(sale.tip||0);
 
 },0);
 
@@ -989,7 +941,8 @@ return sum+Number(sale.tip||0);
 const subtotal=
 daySales.reduce(function(sum,sale){
 
-return sum+Number(sale.subtotal||0);
+return sum+
+Number(sale.subtotal||0);
 
 },0);
 
@@ -997,38 +950,51 @@ return sum+Number(sale.subtotal||0);
 const total=
 daySales.reduce(function(sum,sale){
 
-return sum+Number(sale.total||0);
+return sum+
+Number(sale.total||0);
 
 },0);
 
 
-document.getElementById("tips").textContent=
-money(tips);
+setMoney("tips",tips);
 
-document.getElementById("tipCount").textContent=
-tipped.length;
-
-document.getElementById("cashTips").textContent=
-money(cashTips);
-
-document.getElementById("debitTips").textContent=
-money(debitTips);
-
-document.getElementById("salesTotal").textContent=
-money(total);
-
-document.getElementById("subtotal").textContent=
-money(subtotal);
-
-document.getElementById("saleCount").textContent=
-daySales.length;
-
-document.getElementById("averageTip").textContent=
-
-money(
+setText(
+"tipCount",
 tipped.length
-? tips/tipped.length
-:0
+);
+
+setMoney(
+"cashTips",
+cashTips
+);
+
+setMoney(
+"debitTips",
+debitTips
+);
+
+setMoney(
+"salesTotal",
+total
+);
+
+setMoney(
+"subtotal",
+subtotal
+);
+
+setText(
+"saleCount",
+daySales.length
+);
+
+setMoney(
+"averageTip",
+tipped.length
+?
+tips/tipped.length
+:
+0
 );
 
 
@@ -1045,7 +1011,9 @@ renderDetails(tipped);
 }
 
 
-/* CIERRE */
+/* =========================================
+   CIERRE DEL DÍA
+========================================= */
 
 function renderClose(sales){
 
@@ -1073,7 +1041,7 @@ String(sale.method||"")
 const saleTotal=
 Number(sale.total||0);
 
-const saleTip=
+const tip=
 Number(sale.tip||0);
 
 
@@ -1081,7 +1049,7 @@ if(method==="efectivo"){
 
 cash+=saleTotal;
 
-cashTip+=saleTip;
+cashTip+=tip;
 
 }
 
@@ -1090,12 +1058,12 @@ if(method==="debito"){
 
 debit+=saleTotal;
 
-debitTip+=saleTip;
+debitTip+=tip;
 
 }
 
 
-tips+=saleTip;
+tips+=tip;
 
 subtotal+=
 Number(sale.subtotal||0);
@@ -1105,37 +1073,52 @@ total+=saleTotal;
 });
 
 
-document.getElementById("cashTotal").textContent=
-money(cash);
+setMoney(
+"cashTotal",
+cash
+);
 
-document.getElementById("debitTotal").textContent=
-money(debit);
+setMoney(
+"debitTotal",
+debit
+);
 
-document.getElementById("closeCashTip").textContent=
-money(cashTip);
+setMoney(
+"closeCashTip",
+cashTip
+);
 
-document.getElementById("closeDebitTip").textContent=
-money(debitTip);
+setMoney(
+"closeDebitTip",
+debitTip
+);
 
-document.getElementById("closeSubtotal").textContent=
-money(subtotal);
+setMoney(
+"closeSubtotal",
+subtotal
+);
 
-document.getElementById("closeTips").textContent=
-money(tips);
+setMoney(
+"closeTips",
+tips
+);
 
-document.getElementById("closeCount").textContent=
-sales.length;
+setText(
+"closeCount",
+sales.length
+);
 
-document.getElementById("closeTotal").textContent=
-money(total);
+setMoney(
+"closeTotal",
+total
+);
 
 }
 
 
-/* =====================================
+/* =========================================
    RECAUDACIÓN POR DÍA
-   SIN "SIN FECHA"
-===================================== */
+========================================= */
 
 function renderDaily(){
 
@@ -1145,17 +1128,13 @@ const days={};
 allSales.forEach(function(sale){
 
 const date=
-normalizeDate(sale.date);
+saleDate(sale);
 
-
-/* BLOQUEO DEFINITIVO SIN FECHA */
 
 if(!date){
 return;
 }
 
-
-/* BLOQUEO DEFINITIVO 16/09 */
 
 if(date < "2026-09-17"){
 return;
@@ -1185,21 +1164,20 @@ const method=
 String(sale.method||"")
 .toLowerCase();
 
-
-const saleTotal=
+const total=
 Number(sale.total||0);
 
 
 if(method==="efectivo"){
 
-days[date].cash+=saleTotal;
+days[date].cash+=total;
 
 }
 
 
 if(method==="debito"){
 
-days[date].debit+=saleTotal;
+days[date].debit+=total;
 
 }
 
@@ -1207,10 +1185,7 @@ days[date].debit+=saleTotal;
 days[date].tips+=
 Number(sale.tip||0);
 
-
-days[date].total+=
-saleTotal;
-
+days[date].total+=total;
 
 days[date].count++;
 
@@ -1219,48 +1194,39 @@ days[date].count++;
 
 const dates=
 Object.keys(days)
-
-.filter(function(date){
-
-return /^\d{4}-\d{2}-\d{2}$/.test(date);
-
-})
-
-.filter(function(date){
-
-return date>="2026-09-17";
-
-})
-
 .sort();
 
 
-let gCash=0;
+let generalCash=0;
 
-let gDebit=0;
+let generalDebit=0;
 
-let gTips=0;
+let generalTips=0;
 
-let gCount=0;
+let generalCount=0;
 
-let gTotal=0;
+let generalTotal=0;
 
 
-document.getElementById("dailyRows").innerHTML=
+document.getElementById(
+"dailyRows"
+).innerHTML=
 
 dates.map(function(date){
 
-const d=days[date];
+const day=
+days[date];
 
-gCash+=d.cash;
 
-gDebit+=d.debit;
+generalCash+=day.cash;
 
-gTips+=d.tips;
+generalDebit+=day.debit;
 
-gCount+=d.count;
+generalTips+=day.tips;
 
-gTotal+=d.total;
+generalCount+=day.count;
+
+generalTotal+=day.total;
 
 
 return `
@@ -1274,24 +1240,24 @@ ${displayDate(date)}
 </td>
 
 <td>
-${money(d.cash)}
+${money(day.cash)}
 </td>
 
 <td>
-${money(d.debit)}
+${money(day.debit)}
 </td>
 
 <td class="tip">
-${money(d.tips)}
+${money(day.tips)}
 </td>
 
 <td>
-${d.count}
+${day.count}
 </td>
 
 <td>
 <strong>
-${money(d.total)}
+${money(day.total)}
 </strong>
 </td>
 
@@ -1302,41 +1268,58 @@ ${money(d.total)}
 }).join("");
 
 
-document.getElementById("generalCash").textContent=
-money(gCash);
+setMoney(
+"generalCash",
+generalCash
+);
 
-document.getElementById("generalDebit").textContent=
-money(gDebit);
+setMoney(
+"generalDebit",
+generalDebit
+);
 
-document.getElementById("generalTips").textContent=
-money(gTips);
+setMoney(
+"generalTips",
+generalTips
+);
 
-document.getElementById("generalCount").textContent=
-gCount;
+setText(
+"generalCount",
+generalCount
+);
 
-document.getElementById("generalTotal").textContent=
-money(gTotal);
+setMoney(
+"generalTotal",
+generalTotal
+);
 
 }
 
 
-/* PRODUCTOS */
+/* =========================================
+   PRODUCTOS
+========================================= */
 
 function setProductScope(scope){
 
 productScope=scope;
 
-document.getElementById("btnDay")
-.classList.toggle(
+
+document.getElementById(
+"btnDay"
+).classList.toggle(
 "active",
 scope==="day"
 );
 
-document.getElementById("btnAll")
-.classList.toggle(
+
+document.getElementById(
+"btnAll"
+).classList.toggle(
 "active",
 scope==="all"
 );
+
 
 renderProducts();
 
@@ -1349,29 +1332,40 @@ const selected=
 document.getElementById("fecha").value;
 
 
-const source=
-productScope==="all"
+let sourceSales;
 
-? allSales
 
-: allSales.filter(function(sale){
+if(productScope==="all"){
 
-return sale.date===selected;
+sourceSales=
+allSales;
+
+}else{
+
+sourceSales=
+allSales.filter(function(sale){
+
+return saleDate(sale)===selected;
 
 });
+
+}
 
 
 const products={};
 
 
-source.forEach(function(sale){
+sourceSales.forEach(function(sale){
 
-if(!Array.isArray(sale.items)){
-return;
-}
+const items=
+Array.isArray(sale.items)
+?
+sale.items
+:
+[];
 
 
-sale.items.forEach(function(item){
+items.forEach(function(item){
 
 if(!item){
 return;
@@ -1380,31 +1374,20 @@ return;
 
 const name=
 String(
-
 item.name ||
-
 item.nombre ||
-
 item.product ||
-
 item.producto ||
-
 "Producto sin nombre"
-
 ).trim();
 
 
 let qty=
 Number(
-
 item.qty ??
-
 item.quantity ??
-
 item.cantidad ??
-
 1
-
 );
 
 
@@ -1420,15 +1403,10 @@ qty=1;
 
 let total=
 Number(
-
 item.total ??
-
 item.totalPrice ??
-
 item.subtotal ??
-
 0
-
 );
 
 
@@ -1436,13 +1414,9 @@ if(!total){
 
 const price=
 Number(
-
 item.price ??
-
 item.precio ??
-
 0
-
 );
 
 total=
@@ -1484,18 +1458,15 @@ Object.values(products)
 
 .sort(function(a,b){
 
-if(b.qty!==a.qty){
-
-return b.qty-a.qty;
-
-}
-
-return b.revenue-a.revenue;
+return (
+b.qty-a.qty ||
+b.revenue-a.revenue
+);
 
 });
 
 
-const totalUnits=
+const units=
 list.reduce(function(sum,p){
 
 return sum+p.qty;
@@ -1503,7 +1474,7 @@ return sum+p.qty;
 },0);
 
 
-const totalRevenue=
+const revenue=
 list.reduce(function(sum,p){
 
 return sum+p.revenue;
@@ -1513,85 +1484,104 @@ return sum+p.revenue;
 
 const top=
 list.length
-?list[0]
-:null;
+?
+list[0]
+:
+null;
 
 
 const low=
 list.length
+?
+[...list].sort(function(a,b){
 
-?[...list].sort(function(a,b){
-
-if(a.qty!==b.qty){
-
-return a.qty-b.qty;
-
-}
-
-return a.revenue-b.revenue;
+return (
+a.qty-b.qty ||
+a.revenue-b.revenue
+);
 
 })[0]
+:
+null;
 
-:null;
 
-
-document.getElementById("topProduct").textContent=
-
+setText(
+"topProduct",
 top
-?top.name
-:"—";
+?
+top.name
+:
+"—"
+);
 
 
-document.getElementById("topProductQty").textContent=
-
+setText(
+"topProductQty",
 top
-?top.qty+" unidades"
-:"0 unidades";
+?
+top.qty+" unidades"
+:
+"0 unidades"
+);
 
 
-document.getElementById("lowProduct").textContent=
-
+setText(
+"lowProduct",
 low
-?low.name
-:"—";
+?
+low.name
+:
+"—"
+);
 
 
-document.getElementById("lowProductQty").textContent=
-
+setText(
+"lowProductQty",
 low
-?low.qty+" unidades"
-:"0 unidades";
+?
+low.qty+" unidades"
+:
+"0 unidades"
+);
 
 
-document.getElementById("productUnits").textContent=
-
-totalUnits.toLocaleString("es-CL");
-
-
-document.getElementById("productRevenue").textContent=
-
-money(totalRevenue);
+setText(
+"productUnits",
+units.toLocaleString("es-CL")
+);
 
 
-document.getElementById("productTableUnits").textContent=
+setMoney(
+"productRevenue",
+revenue
+);
 
-totalUnits.toLocaleString("es-CL");
+
+setText(
+"productTableUnits",
+units.toLocaleString("es-CL")
+);
 
 
-document.getElementById("productTableRevenue").textContent=
-
-money(totalRevenue);
+setMoney(
+"productTableRevenue",
+revenue
+);
 
 
 const rows=
-document.getElementById("productRows");
+document.getElementById(
+"productRows"
+);
 
 
 const empty=
-document.getElementById("productEmpty");
+document.getElementById(
+"productEmpty"
+);
 
 
-if(list.length===0){
+if(!list.length){
 
 rows.innerHTML="";
 
@@ -1606,7 +1596,7 @@ empty.style.display=
 
 rows.innerHTML=
 
-list.map(function(product,index){
+list.map(function(p,index){
 
 return `
 
@@ -1620,18 +1610,18 @@ ${index+1}
 
 <td>
 <strong>
-${html(product.name)}
+${html(p.name)}
 </strong>
 </td>
 
 <td>
 <strong>
-${product.qty}
+${p.qty}
 </strong>
 </td>
 
 <td>
-${money(product.revenue)}
+${money(p.revenue)}
 </td>
 
 </tr>
@@ -1644,16 +1634,16 @@ ${money(product.revenue)}
 
 
 const chart=
-document.getElementById("productChart");
+document.getElementById(
+"productChart"
+);
 
 
-if(list.length===0){
+if(!list.length){
 
 chart.innerHTML=
 
-'<div class="empty">'+
-'No existen productos para graficar.'+
-'</div>';
+'<div class="empty">No existen productos para graficar.</div>';
 
 return;
 
@@ -1661,37 +1651,31 @@ return;
 
 
 const maxQty=
-
 Math.max(
-
 ...list.map(function(p){
 
 return p.qty;
 
 }),
-
 1
-
 );
 
 
 chart.innerHTML=
 
-list.map(function(product){
+list.map(function(p){
 
 const width=
-(product.qty/maxQty)*100;
+(p.qty/maxQty)*100;
 
 
 return `
 
 <div class="barRow">
 
-<div
-class="barName"
-title="${html(product.name)}">
+<div class="barName">
 
-${html(product.name)}
+${html(p.name)}
 
 </div>
 
@@ -1706,7 +1690,7 @@ style="width:${width}%">
 
 <div class="barValue">
 
-${product.qty}
+${p.qty}
 
 </div>
 
@@ -1719,7 +1703,9 @@ ${product.qty}
 }
 
 
-/* VENDEDORES */
+/* =========================================
+   VENDEDORES
+========================================= */
 
 function renderSellers(sales){
 
@@ -1729,14 +1715,11 @@ const sellers={};
 sales.forEach(function(sale){
 
 const name=
-
 String(
-sale.seller||
+sale.seller ||
 "Sin vendedor"
 ).trim()
-
 ||
-
 "Sin vendedor";
 
 
@@ -1756,7 +1739,6 @@ count:0
 sellers[name].tips+=
 Number(sale.tip||0);
 
-
 sellers[name].count++;
 
 });
@@ -1767,31 +1749,38 @@ Object.entries(sellers)
 
 .sort(function(a,b){
 
-return b[1].tips-a[1].tips;
+return b[1].tips-
+a[1].tips;
 
 });
 
 
-if(entries.length===0){
+const box=
+document.getElementById(
+"sellers"
+);
 
-document.getElementById("sellers").innerHTML=
 
-'<div class="empty">'+
-'Sin propinas para esta fecha.'+
-'</div>';
+if(!entries.length){
+
+box.innerHTML=
+
+'<div class="empty">Sin propinas para esta fecha.</div>';
 
 return;
 
 }
 
 
-document.getElementById("sellers").innerHTML=
+box.innerHTML=
 
 entries.map(function(entry){
 
-const name=entry[0];
+const name=
+entry[0];
 
-const info=entry[1];
+const data=
+entry[1];
 
 
 return `
@@ -1801,17 +1790,13 @@ return `
 ${html(name)}
 
 <strong>
-
-${money(info.tips)}
-
+${money(data.tips)}
 </strong>
 
 <small>
 
-${info.count}
-
-venta${info.count===1?"":"s"}
-
+${data.count}
+venta${data.count===1?"":"s"}
 con propina
 
 </small>
@@ -1825,18 +1810,25 @@ con propina
 }
 
 
-/* DETALLE */
+/* =========================================
+   DETALLE DE PROPINAS
+========================================= */
 
 function renderDetails(sales){
 
 const rows=
-document.getElementById("detailRows");
+document.getElementById(
+"detailRows"
+);
+
 
 const empty=
-document.getElementById("empty");
+document.getElementById(
+"empty"
+);
 
 
-if(sales.length===0){
+if(!sales.length){
 
 rows.innerHTML="";
 
@@ -1853,14 +1845,14 @@ empty.style.display=
 
 
 const sorted=
-[...sales]
+[...sales].sort(function(a,b){
 
-.sort(function(a,b){
-
-return String(b.clientTime||"")
-
-.localeCompare(
-String(a.clientTime||"")
+return String(
+b.clientTime||""
+).localeCompare(
+String(
+a.clientTime||""
+)
 );
 
 });
@@ -1871,17 +1863,25 @@ rows.innerHTML=
 sorted.map(function(sale){
 
 let method=
-String(sale.method||"");
+String(
+sale.method||""
+);
 
 
-if(method.toLowerCase()==="efectivo"){
+if(
+method.toLowerCase()
+==="efectivo"
+){
 
 method="Efectivo";
 
 }
 
 
-if(method.toLowerCase()==="debito"){
+if(
+method.toLowerCase()
+==="debito"
+){
 
 method="Débito";
 
@@ -1929,11 +1929,13 @@ ${money(sale.total)}
 }
 
 
-/* FECHA */
+/* =========================================
+   CAMBIO DE FECHA
+========================================= */
 
-document
-.getElementById("fecha")
-.addEventListener(
+document.getElementById(
+"fecha"
+).addEventListener(
 "change",
 render
 );
@@ -1942,13 +1944,9 @@ render
 setToday();
 
 
-/* ============================================
-   FIREBASE EN TIEMPO REAL
-
-   SOLO SE ACEPTAN:
-   - fechas válidas
-   - desde 17/09/2026
-============================================ */
+/* =========================================
+   FIREBASE
+========================================= */
 
 ventas.onSnapshot(
 
@@ -1973,18 +1971,21 @@ id:doc.id,
 .map(function(sale){
 
 /*
-Normalizamos la fecha ANTES
-de incorporarla a la aplicación.
+Toda venta obtiene una fecha
+normalizada antes de mostrarse.
 */
 
 const fecha=
-normalizeDate(sale.date);
+saleDate(sale);
+
 
 if(fecha){
 
-sale.date=fecha;
+sale.date=
+fecha;
 
 }
+
 
 return sale;
 
@@ -1993,11 +1994,10 @@ return sale;
 .filter(function(sale){
 
 /*
-Filtro central.
-
 Sin fecha = fuera.
 16/09 = fuera.
 Anterior al 17/09 = fuera.
+17/09 en adelante = válido.
 */
 
 return validSale(sale);
@@ -2006,7 +2006,9 @@ return validSale(sale);
 
 
 const status=
-document.getElementById("status");
+document.getElementById(
+"status"
+);
 
 
 status.textContent=
@@ -2032,7 +2034,9 @@ console.error(error);
 
 
 const status=
-document.getElementById("status");
+document.getElementById(
+"status"
+);
 
 
 status.textContent=
