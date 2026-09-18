@@ -883,7 +883,7 @@ document.getElementById("fecha").value;
 const daySales=
 allSales.filter(function(sale){
 
-return sale.date===selected;
+return normalizeDate(sale.date)===selected;
 
 });
 
