@@ -2,248 +2,257 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Propinas - Fonda Pache Pache</title>
+<title>Control - Fonda Pache Pache</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f3f4f6;
+color:#172033
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
-    color: #172033;
+.wrap{
+max-width:1150px;
+margin:auto;
+padding:16px
 }
 
-.wrap {
-    max-width: 1100px;
-    margin: auto;
-    padding: 16px;
+header{
+background:#991f32;
+color:white;
+padding:22px 18px;
+border-radius:20px;
+margin-bottom:16px
 }
 
-header {
-    background: #991f32;
-    color: white;
-    padding: 22px 18px;
-    border-radius: 20px;
-    margin-bottom: 18px;
+header h1{margin:0;font-size:27px}
+header p{margin:6px 0 0;opacity:.9}
+
+.toolbar,.panel,.cards{
+background:#fff;
+border-radius:18px;
+box-shadow:0 5px 18px #00000012
 }
 
-header h1 {
-    margin: 0;
-    font-size: 28px;
+.toolbar{
+padding:15px;
+margin-bottom:15px;
+display:flex;
+gap:10px;
+align-items:end;
+flex-wrap:wrap
 }
 
-header p {
-    margin: 7px 0 0;
-    opacity: .9;
+.toolbar label{font-weight:bold}
+
+.toolbar input{
+padding:11px;
+border:1px solid #aaa;
+border-radius:10px;
+font-size:16px
 }
 
-.toolbar {
-    background: white;
-    padding: 18px;
-    border-radius: 18px;
-    margin-bottom: 16px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
-
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: end;
+button{
+padding:12px 15px;
+border:0;
+border-radius:10px;
+background:#991f32;
+color:white;
+font-weight:bold;
+cursor:pointer
 }
 
-.toolbar label {
-    font-size: 17px;
-    font-weight: bold;
+.status{
+padding:12px;
+border-radius:12px;
+background:#fff7ed;
+margin-bottom:15px
 }
 
-.toolbar input {
-    padding: 12px;
-    font-size: 17px;
-    border: 2px solid #222;
-    border-radius: 12px;
+.ok{background:#dcfce7;color:#166534}
+.error{background:#fee2e2;color:#991b1b}
+
+.cards{
+padding:12px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:15px
 }
 
-button {
-    border: none;
-    border-radius: 12px;
-    padding: 13px 18px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    background: #991f32;
-    color: white;
+.card{
+padding:15px;
+border:1px solid #e5e7eb;
+border-radius:14px
 }
 
-.status {
-    padding: 14px 16px;
-    border-radius: 14px;
-    margin-bottom: 16px;
-    background: #fff7ed;
-    font-size: 17px;
+.card small{
+display:block;
+color:#6b7280;
+margin-bottom:8px
 }
 
-.status.ok {
-    background: #dcfce7;
-    color: #166534;
+.card strong{font-size:22px}
+.green{color:#15803d}
+
+.panel{
+padding:15px;
+margin-bottom:15px
 }
 
-.status.error {
-    background: #fee2e2;
-    color: #991b1b;
+.panel h2{
+margin:0 0 12px;
+font-size:20px
 }
 
-.cards {
-    background: white;
-    padding: 18px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
-
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 14px;
-
-    margin-bottom: 18px;
+.close,.productStats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px
 }
 
-.card {
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 18px;
+.totalbox{
+background:#ecfdf5;
+border:2px solid #16a34a
 }
 
-.card small {
-    display: block;
-    color: #6b7280;
-    font-size: 15px;
-    margin-bottom: 10px;
+.totalbox strong{color:#15803d}
+
+.scopeBox{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:15px
 }
 
-.card strong {
-    font-size: 25px;
+.scopeBtn{
+background:#e5e7eb;
+color:#172033
 }
 
-.green {
-    color: #15803d;
+.scopeBtn.active{
+background:#991f32;
+color:white
 }
 
-.panel {
-    background: white;
-    padding: 18px;
-    border-radius: 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+.sellerGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:10px
 }
 
-.panel h2 {
-    margin-top: 0;
+.seller{
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:12px
 }
 
-.seller-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
-    gap: 12px;
+.seller strong{
+display:block;
+color:#15803d;
+font-size:20px;
+margin-top:5px
 }
 
-.seller-card {
-    border: 1px solid #e5e7eb;
-    padding: 14px;
-    border-radius: 14px;
+.tablewrap{overflow:auto}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px
 }
 
-.seller-name {
-    font-weight: bold;
+th,td{
+padding:11px;
+border-bottom:1px solid #e5e7eb;
+text-align:left
 }
 
-.seller-total {
-    font-size: 21px;
-    color: #15803d;
-    font-weight: bold;
-    margin-top: 5px;
+th{
+font-size:13px;
+color:#6b7280
 }
 
-.table-wrap {
-    overflow-x: auto;
+.tip{color:#15803d;font-weight:bold}
+.general{font-weight:bold;background:#f3f4f6}
+
+.empty{
+text-align:center;
+color:#6b7280;
+padding:20px
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 750px;
+.chartBox{
+margin-top:18px;
+padding:15px;
+border:1px solid #e5e7eb;
+border-radius:15px
 }
 
-th,
-td {
-    padding: 11px;
-    border-bottom: 1px solid #e5e7eb;
-    text-align: left;
+.chartTitle{
+font-weight:bold;
+margin-bottom:15px
 }
 
-th {
-    font-size: 13px;
-    color: #6b7280;
+.barRow{
+display:grid;
+grid-template-columns:minmax(100px,180px) 1fr 55px;
+gap:8px;
+align-items:center;
+margin-bottom:11px
 }
 
-td.tip {
-    color: #15803d;
-    font-weight: bold;
+.barName{
+font-size:13px;
+font-weight:bold;
+overflow:hidden;
+text-overflow:ellipsis
 }
 
-.empty {
-    text-align: center;
-    padding: 25px;
-    color: #6b7280;
+.barTrack{
+height:25px;
+background:#e5e7eb;
+border-radius:20px;
+overflow:hidden
 }
 
-@media(max-width:750px) {
-
-    .cards {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .card strong {
-        font-size: 22px;
-    }
-
-    header h1 {
-        font-size: 24px;
-    }
+.barFill{
+height:100%;
+background:#991f32;
+border-radius:20px;
+min-width:2px
 }
 
-@media(max-width:420px) {
-
-    .cards {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .toolbar {
-        align-items: stretch;
-    }
+.barValue{
+text-align:right;
+font-weight:bold
 }
 
-@media print {
+@media(max-width:720px){
+.cards,.close,.productStats{
+grid-template-columns:1fr 1fr
+}
 
-    header,
-    .toolbar,
-    .status {
-        display: none;
-    }
+.card strong{font-size:19px}
 
-    body {
-        background: white;
-    }
+.barRow{
+grid-template-columns:95px 1fr 45px
+}
+}
 
-    .cards,
-    .panel {
-        box-shadow: none;
-    }
+@media print{
+header,.toolbar,.status,.scopeBox{
+display:none!important
+}
+
+body{background:white}
+
+.panel,.cards{box-shadow:none}
 }
 </style>
 </head>
@@ -253,446 +262,891 @@ td.tip {
 <div class="wrap">
 
 <header>
-    <h1>💰 Propinas - Fonda Pache Pache</h1>
-    <p>Control de propinas sincronizado con la caja</p>
+<h1>📊 Control - Fonda Pache Pache</h1>
+<p>Ventas, propinas, recaudación y productos vendidos</p>
 </header>
 
-
 <div class="toolbar">
-
-    <div>
-        <label for="fecha">Fecha</label><br>
-        <input type="date" id="fecha">
-    </div>
-
-    <button onclick="setToday()">
-        Hoy
-    </button>
-
-    <button onclick="window.print()">
-        Imprimir resumen
-    </button>
-
+<div>
+<label>Fecha</label><br>
+<input id="fecha" type="date">
 </div>
 
+<button onclick="setToday()">Hoy</button>
+<button onclick="window.print()">Imprimir resumen</button>
+</div>
 
 <div id="status" class="status">
-    Conectando con Firebase...
+Conectando con Firebase...
 </div>
-
 
 <div class="cards">
 
-    <div class="card">
-        <small>Propinas del día</small>
-        <strong id="tips" class="green">$0</strong>
-    </div>
+<div class="card">
+<small>💰 Propinas del día</small>
+<strong id="tips" class="green">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Ventas con propina</small>
-        <strong id="count">0</strong>
-    </div>
+<div class="card">
+<small>Ventas con propina</small>
+<strong id="tipCount">0</strong>
+</div>
 
-    <div class="card">
-        <small>Propinas efectivo</small>
-        <strong id="cashTips">$0</strong>
-    </div>
+<div class="card">
+<small>Propinas efectivo</small>
+<strong id="cashTips">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Propinas débito</small>
-        <strong id="debitTips">$0</strong>
-    </div>
+<div class="card">
+<small>Propinas débito</small>
+<strong id="debitTips">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Total vendido</small>
-        <strong id="salesTotal">$0</strong>
-    </div>
+<div class="card">
+<small>Total vendido</small>
+<strong id="salesTotal">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Subtotal sin propina</small>
-        <strong id="subtotal">$0</strong>
-    </div>
+<div class="card">
+<small>Subtotal sin propina</small>
+<strong id="subtotal">$0</strong>
+</div>
 
-    <div class="card">
-        <small>Ventas registradas</small>
-        <strong id="allCount">0</strong>
-    </div>
+<div class="card">
+<small>Ventas registradas</small>
+<strong id="saleCount">0</strong>
+</div>
 
-    <div class="card">
-        <small>Promedio de propina</small>
-        <strong id="avg">$0</strong>
-    </div>
+<div class="card">
+<small>Promedio de propina</small>
+<strong id="averageTip">$0</strong>
+</div>
 
 </div>
 
+<div class="panel">
+<h2>📊 Cierre del día</h2>
+
+<div class="close">
+
+<div class="card">
+<small>💵 Recaudado efectivo</small>
+<strong id="cashTotal">$0</strong>
+</div>
+
+<div class="card">
+<small>💳 Recaudado débito</small>
+<strong id="debitTotal">$0</strong>
+</div>
+
+<div class="card">
+<small>💵 Propina efectivo</small>
+<strong id="closeCashTip">$0</strong>
+</div>
+
+<div class="card">
+<small>💳 Propina débito</small>
+<strong id="closeDebitTip">$0</strong>
+</div>
+
+<div class="card">
+<small>🧾 Venta sin propinas</small>
+<strong id="closeSubtotal">$0</strong>
+</div>
+
+<div class="card">
+<small>💰 Propinas</small>
+<strong id="closeTips">$0</strong>
+</div>
+
+<div class="card">
+<small>🛒 Cantidad de ventas</small>
+<strong id="closeCount">0</strong>
+</div>
+
+<div class="card totalbox">
+<small>💰 TOTAL RECAUDADO DEL DÍA</small>
+<strong id="closeTotal">$0</strong>
+</div>
+
+</div>
+</div>
 
 <div class="panel">
 
-    <h2>Propinas por vendedor</h2>
+<h2>📅 Recaudación por día</h2>
 
-    <div id="sellers" class="seller-grid">
+<div class="tablewrap">
 
-        <div class="empty">
-            Esperando información...
-        </div>
+<table>
 
-    </div>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Efectivo</th>
+<th>Débito</th>
+<th>Propinas</th>
+<th>Ventas</th>
+<th>Total día</th>
+</tr>
+</thead>
+
+<tbody id="dailyRows"></tbody>
+
+<tfoot>
+<tr class="general">
+<td>TOTAL GENERAL</td>
+<td id="generalCash">$0</td>
+<td id="generalDebit">$0</td>
+<td id="generalTips" class="tip">$0</td>
+<td id="generalCount">0</td>
+<td id="generalTotal" class="tip">$0</td>
+</tr>
+</tfoot>
+
+</table>
 
 </div>
-
+</div>
 
 <div class="panel">
 
-    <h2>Detalle de propinas</h2>
+<h2>📦 Ventas de productos</h2>
 
-    <div class="table-wrap">
+<p style="color:#6b7280">
+Aquí puedes ver exactamente cuántas unidades se han vendido de cada producto.
+</p>
 
-        <table>
+<div class="scopeBox">
 
-            <thead>
-                <tr>
-                    <th>Hora</th>
-                    <th>Vendedor</th>
-                    <th>Mesa</th>
-                    <th>Pago</th>
-                    <th>Subtotal</th>
-                    <th>Propina</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
+<button id="btnDay"
+class="scopeBtn active"
+onclick="setProductScope('day')">
+📅 Día seleccionado
+</button>
 
-            <tbody id="rows"></tbody>
+<button id="btnAll"
+class="scopeBtn"
+onclick="setProductScope('all')">
+📊 Todo el período
+</button>
 
-        </table>
+</div>
 
-        <div
-            id="empty"
-            class="empty"
-            style="display:none"
-        >
-            No hay propinas registradas para esta fecha.
-        </div>
+<div class="productStats">
 
-    </div>
+<div class="card">
+<small>🏆 Más vendido</small>
+<strong id="topProduct">—</strong>
+<small id="topProductQty">0 unidades</small>
+</div>
 
+<div class="card">
+<small>📉 Menos vendido</small>
+<strong id="lowProduct">—</strong>
+<small id="lowProductQty">0 unidades</small>
+</div>
+
+<div class="card">
+<small>📦 Unidades totales</small>
+<strong id="productUnits">0</strong>
+</div>
+
+<div class="card totalbox">
+<small>💰 Total vendido en productos</small>
+<strong id="productRevenue">$0</strong>
 </div>
 
 </div>
 
+<br>
+
+<h3>📋 Detalle de productos vendidos</h3>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+<tr>
+<th>#</th>
+<th>Producto</th>
+<th>Cantidad vendida</th>
+<th>Total vendido</th>
+</tr>
+</thead>
+
+<tbody id="productRows"></tbody>
+
+<tfoot>
+<tr class="general">
+<td colspan="2">TOTAL</td>
+<td id="productTableUnits">0</td>
+<td id="productTableRevenue">$0</td>
+</tr>
+</tfoot>
+
+</table>
+
+<div id="productEmpty"
+class="empty"
+style="display:none">
+No existen productos vendidos para este período.
+</div>
+
+</div>
+
+<div class="chartBox">
+<div class="chartTitle">📊 Productos más vendidos</div>
+<div id="productChart"></div>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>👤 Propinas por vendedor</h2>
+
+<div id="sellers" class="sellerGrid"></div>
+
+</div>
+
+<div class="panel">
+
+<h2>🧾 Detalle de propinas</h2>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Hora</th>
+<th>Vendedor</th>
+<th>Mesa</th>
+<th>Pago</th>
+<th>Subtotal</th>
+<th>Propina</th>
+<th>Total</th>
+</tr>
+</thead>
+
+<tbody id="detailRows"></tbody>
+
+</table>
+
+<div id="empty" class="empty">
+No hay propinas para esta fecha.
+</div>
+
+</div>
+</div>
+
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 
-
 <script>
 
-/* ================================
-   CONFIGURACIÓN FIREBASE
-================================ */
-
-const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
-
-    authDomain:
-    "caja-pache-pache.firebaseapp.com",
-
-    projectId:
-    "caja-pache-pache",
-
-    storageBucket:
-    "caja-pache-pache.firebasestorage.app",
-
-    messagingSenderId:
-    "59192876859",
-
-    appId:
-    "1:59192876859:web:b184c5b3e63826bd50a11e",
-
-    measurementId:
-    "G-QH9ELJJ5NT"
-
+const firebaseConfig={
+apiKey:"AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
+authDomain:"caja-pache-pache.firebaseapp.com",
+projectId:"caja-pache-pache",
+storageBucket:"caja-pache-pache.firebasestorage.app",
+messagingSenderId:"59192876859",
+appId:"1:59192876859:web:b184c5b3e63826bd50a11e",
+measurementId:"G-QH9ELJJ5NT"
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
+const db=firebase.firestore();
+const ventas=db.collection("Ventas");
 
-const ventas = db.collection("Ventas");
+let allSales=[];
+let productScope="day";
 
-let data = [];
+function money(value){
 
-
-/* ================================
-   FUNCIONES
-================================ */
-
-function money(value) {
-
-    const numero = Number(value) || 0;
-
-    return "$" +
-        Math.round(numero)
-        .toLocaleString("es-CL");
+return "$"+
+Math.round(Number(value)||0)
+.toLocaleString("es-CL");
 
 }
 
+function todayKey(){
 
-function localDateKey() {
+const d=new Date();
 
-    const d = new Date();
-
-    const year = d.getFullYear();
-
-    const month =
-        String(d.getMonth() + 1)
-        .padStart(2,"0");
-
-    const day =
-        String(d.getDate())
-        .padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
 
 }
 
+function setToday(){
 
-function setToday() {
-
-    document.getElementById("fecha").value =
-        localDateKey();
-
-    render();
+document.getElementById("fecha").value=todayKey();
+render();
 
 }
 
+function html(value){
 
-function escapeHTML(value) {
+return String(value??"")
+.replace(/[&<>"']/g,function(c){
 
-    return String(value ?? "")
-    .replace(
-        /[&<>"']/g,
-        function(character) {
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[c];
 
-            const map = {
-
-                "&":"&amp;",
-                "<":"&lt;",
-                ">":"&gt;",
-                '"':"&quot;",
-                "'":"&#039;"
-
-            };
-
-            return map[character];
-
-        }
-    );
+});
 
 }
 
+function displayDate(date){
 
-function getSaleTime(sale) {
+if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){
+return date;
+}
 
-    try {
+const p=date.split("-");
 
-        if (
-            sale.createdAt &&
-            typeof sale.createdAt.toDate === "function"
-        ) {
+return p[2]+"/"+p[1]+"/"+p[0];
 
-            return sale.createdAt
-            .toDate()
-            .toLocaleTimeString(
-                "es-CL",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            );
+}
 
-        }
+function saleTime(sale){
 
+try{
 
-        if (sale.clientTime) {
+if(
+sale.createdAt &&
+typeof sale.createdAt.toDate==="function"
+){
 
-            return new Date(
-                sale.clientTime
-            ).toLocaleTimeString(
-                "es-CL",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            );
+return sale.createdAt
+.toDate()
+.toLocaleTimeString(
+"es-CL",
+{hour:"2-digit",minute:"2-digit"}
+);
 
-        }
+}
 
-    }
-    catch(error) {
+if(sale.clientTime){
 
-        console.log(error);
+return new Date(sale.clientTime)
+.toLocaleTimeString(
+"es-CL",
+{hour:"2-digit",minute:"2-digit"}
+);
 
-    }
+}
 
-    return "—";
+}catch(e){}
+
+return "—";
 
 }
 
 
 /* ================================
-   MOSTRAR DATOS
+   RESUMEN PRINCIPAL
 ================================ */
 
-function render() {
+function render(){
 
-    const selectedDate =
-        document.getElementById("fecha").value;
+const selected=
+document.getElementById("fecha").value;
 
+const daySales=
+allSales.filter(function(sale){
+return sale.date===selected;
+});
 
-    const daySales =
-        data.filter(function(sale) {
+const tipped=
+daySales.filter(function(sale){
+return Number(sale.tip||0)>0;
+});
 
-            return sale.date === selectedDate;
+const tips=
+tipped.reduce(function(sum,sale){
+return sum+Number(sale.tip||0);
+},0);
 
-        });
+const cashTips=
+tipped
+.filter(function(sale){
+return String(sale.method||"").toLowerCase()==="efectivo";
+})
+.reduce(function(sum,sale){
+return sum+Number(sale.tip||0);
+},0);
 
+const debitTips=
+tipped
+.filter(function(sale){
+return String(sale.method||"").toLowerCase()==="debito";
+})
+.reduce(function(sum,sale){
+return sum+Number(sale.tip||0);
+},0);
 
-    const salesWithTip =
-        daySales.filter(function(sale) {
+const subtotal=
+daySales.reduce(function(sum,sale){
+return sum+Number(sale.subtotal||0);
+},0);
 
-            return Number(sale.tip || 0) > 0;
+const total=
+daySales.reduce(function(sum,sale){
+return sum+Number(sale.total||0);
+},0);
 
-        });
+document.getElementById("tips").textContent=money(tips);
+document.getElementById("tipCount").textContent=tipped.length;
+document.getElementById("cashTips").textContent=money(cashTips);
+document.getElementById("debitTips").textContent=money(debitTips);
+document.getElementById("salesTotal").textContent=money(total);
+document.getElementById("subtotal").textContent=money(subtotal);
+document.getElementById("saleCount").textContent=daySales.length;
 
+document.getElementById("averageTip").textContent=
+money(tipped.length ? tips/tipped.length : 0);
 
-    const totalTips =
-        salesWithTip.reduce(
-            function(total,sale) {
+renderClose(daySales);
+renderDaily();
+renderProducts();
+renderSellers(tipped);
+renderDetails(tipped);
 
-                return total +
-                    Number(sale.tip || 0);
-
-            },
-            0
-        );
-
-
-    const cashTips =
-        salesWithTip
-        .filter(function(sale) {
-
-            return String(
-                sale.method || ""
-            ).toLowerCase() === "efectivo";
-
-        })
-        .reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.tip || 0);
-
-            },
-            0
-        );
-
-
-    const debitTips =
-        salesWithTip
-        .filter(function(sale) {
-
-            return String(
-                sale.method || ""
-            ).toLowerCase() === "debito";
-
-        })
-        .reduce(
-            function(total,sale) {
-
-                return total +
-                    Number(sale.tip || 0);
-
-            },
-            0
-        );
+}
 
 
-    const totalSales =
-        daySales.reduce(
-            function(total,sale) {
+/* ================================
+   CIERRE DEL DÍA
+================================ */
 
-                return total +
-                    Number(sale.total || 0);
+function renderClose(sales){
 
-            },
-            0
-        );
+let cash=0;
+let debit=0;
+let tips=0;
+let cashTip=0;
+let debitTip=0;
+let subtotal=0;
+let total=0;
 
+sales.forEach(function(sale){
 
-    const subtotalSales =
-        daySales.reduce(
-            function(total,sale) {
+const method=
+String(sale.method||"").toLowerCase();
 
-                return total +
-                    Number(sale.subtotal || 0);
+const saleTotal=
+Number(sale.total||0);
 
-            },
-            0
-        );
+const saleTip=
+Number(sale.tip||0);
 
+if(method==="efectivo"){
+cash+=saleTotal;
+cashTip+=saleTip;
+}
 
-    const averageTip =
-        salesWithTip.length > 0
-        ? totalTips / salesWithTip.length
-        : 0;
+if(method==="debito"){
+debit+=saleTotal;
+debitTip+=saleTip;
+}
 
+tips+=saleTip;
+subtotal+=Number(sale.subtotal||0);
+total+=saleTotal;
 
-    document.getElementById("tips")
-        .textContent =
-        money(totalTips);
+});
 
+document.getElementById("cashTotal").textContent=money(cash);
+document.getElementById("debitTotal").textContent=money(debit);
+document.getElementById("closeCashTip").textContent=money(cashTip);
+document.getElementById("closeDebitTip").textContent=money(debitTip);
+document.getElementById("closeSubtotal").textContent=money(subtotal);
+document.getElementById("closeTips").textContent=money(tips);
+document.getElementById("closeCount").textContent=sales.length;
+document.getElementById("closeTotal").textContent=money(total);
 
-    document.getElementById("count")
-        .textContent =
-        salesWithTip.length;
-
-
-    document.getElementById("cashTips")
-        .textContent =
-        money(cashTips);
-
-
-    document.getElementById("debitTips")
-        .textContent =
-        money(debitTips);
-
-
-    document.getElementById("salesTotal")
-        .textContent =
-        money(totalSales);
+}
 
 
-    document.getElementById("subtotal")
-        .textContent =
-        money(subtotalSales);
+/* ================================
+   RECAUDACIÓN POR DÍA
+================================ */
+
+function renderDaily(){
+
+const days={};
+
+allSales.forEach(function(sale){
+
+const date=sale.date;
+
+if(!date){
+return;
+}
+
+if(!days[date]){
+
+days[date]={
+cash:0,
+debit:0,
+tips:0,
+count:0,
+total:0
+};
+
+}
+
+const method=
+String(sale.method||"").toLowerCase();
+
+const saleTotal=
+Number(sale.total||0);
+
+if(method==="efectivo"){
+days[date].cash+=saleTotal;
+}
+
+if(method==="debito"){
+days[date].debit+=saleTotal;
+}
+
+days[date].tips+=Number(sale.tip||0);
+days[date].total+=saleTotal;
+days[date].count++;
+
+});
+
+const dates=
+Object.keys(days).sort();
+
+let gCash=0;
+let gDebit=0;
+let gTips=0;
+let gCount=0;
+let gTotal=0;
+
+document.getElementById("dailyRows").innerHTML=
+
+dates.map(function(date){
+
+const d=days[date];
+
+gCash+=d.cash;
+gDebit+=d.debit;
+gTips+=d.tips;
+gCount+=d.count;
+gTotal+=d.total;
+
+return `
+<tr>
+
+<td>
+<strong>${displayDate(date)}</strong>
+</td>
+
+<td>${money(d.cash)}</td>
+
+<td>${money(d.debit)}</td>
+
+<td class="tip">
+${money(d.tips)}
+</td>
+
+<td>${d.count}</td>
+
+<td>
+<strong>${money(d.total)}</strong>
+</td>
+
+</tr>
+`;
+
+}).join("");
+
+document.getElementById("generalCash").textContent=money(gCash);
+document.getElementById("generalDebit").textContent=money(gDebit);
+document.getElementById("generalTips").textContent=money(gTips);
+document.getElementById("generalCount").textContent=gCount;
+document.getElementById("generalTotal").textContent=money(gTotal);
+
+}
 
 
-    document.getElementById("allCount")
-        .textContent =
-        daySales.length;
+/* ================================
+   PRODUCTOS
+================================ */
+
+function setProductScope(scope){
+
+productScope=scope;
+
+document.getElementById("btnDay")
+.classList.toggle("active",scope==="day");
+
+document.getElementById("btnAll")
+.classList.toggle("active",scope==="all");
+
+renderProducts();
+
+}
 
 
-    document.getElementById("avg")
-        .textContent =
-        money(averageTip);
+function renderProducts(){
 
+const selected=
+document.getElementById("fecha").value;
 
-    renderSellers(salesWithTip);
+const source=
+productScope==="all"
+? allSales
+: allSales.filter(function(sale){
+return sale.date===selected;
+});
 
-    renderTable(salesWithTip);
+const products={};
+
+source.forEach(function(sale){
+
+if(!Array.isArray(sale.items)){
+return;
+}
+
+sale.items.forEach(function(item){
+
+if(!item){
+return;
+}
+
+const name=
+String(
+item.name ||
+item.nombre ||
+item.product ||
+item.producto ||
+"Producto sin nombre"
+).trim();
+
+let qty=
+Number(
+item.qty ??
+item.quantity ??
+item.cantidad ??
+1
+);
+
+if(!Number.isFinite(qty) || qty<=0){
+qty=1;
+}
+
+let total=
+Number(
+item.total ??
+item.totalPrice ??
+item.subtotal ??
+0
+);
+
+if(!total){
+
+const price=
+Number(
+item.price ??
+item.precio ??
+0
+);
+
+total=price*qty;
+
+}
+
+const key=
+name.toLowerCase();
+
+if(!products[key]){
+
+products[key]={
+name:name,
+qty:0,
+revenue:0
+};
+
+}
+
+products[key].qty+=qty;
+products[key].revenue+=total;
+
+});
+
+});
+
+const list=
+Object.values(products)
+.sort(function(a,b){
+
+if(b.qty!==a.qty){
+return b.qty-a.qty;
+}
+
+return b.revenue-a.revenue;
+
+});
+
+const totalUnits=
+list.reduce(function(sum,p){
+return sum+p.qty;
+},0);
+
+const totalRevenue=
+list.reduce(function(sum,p){
+return sum+p.revenue;
+},0);
+
+const top=list.length ? list[0] : null;
+
+const low=
+list.length
+? [...list].sort(function(a,b){
+
+if(a.qty!==b.qty){
+return a.qty-b.qty;
+}
+
+return a.revenue-b.revenue;
+
+})[0]
+: null;
+
+document.getElementById("topProduct").textContent=
+top ? top.name : "—";
+
+document.getElementById("topProductQty").textContent=
+top ? top.qty+" unidades" : "0 unidades";
+
+document.getElementById("lowProduct").textContent=
+low ? low.name : "—";
+
+document.getElementById("lowProductQty").textContent=
+low ? low.qty+" unidades" : "0 unidades";
+
+document.getElementById("productUnits").textContent=
+totalUnits.toLocaleString("es-CL");
+
+document.getElementById("productRevenue").textContent=
+money(totalRevenue);
+
+document.getElementById("productTableUnits").textContent=
+totalUnits.toLocaleString("es-CL");
+
+document.getElementById("productTableRevenue").textContent=
+money(totalRevenue);
+
+const rows=
+document.getElementById("productRows");
+
+const empty=
+document.getElementById("productEmpty");
+
+if(list.length===0){
+
+rows.innerHTML="";
+empty.style.display="block";
+
+}else{
+
+empty.style.display="none";
+
+rows.innerHTML=
+
+list.map(function(product,index){
+
+return `
+<tr>
+
+<td>
+<strong>${index+1}</strong>
+</td>
+
+<td>
+<strong>${html(product.name)}</strong>
+</td>
+
+<td>
+<strong>${product.qty}</strong>
+</td>
+
+<td>
+${money(product.revenue)}
+</td>
+
+</tr>
+`;
+
+}).join("");
+
+}
+
+const chart=
+document.getElementById("productChart");
+
+if(list.length===0){
+
+chart.innerHTML=
+'<div class="empty">No existen productos para graficar.</div>';
+
+return;
+
+}
+
+const maxQty=
+Math.max(
+...list.map(function(p){
+return p.qty;
+}),
+1
+);
+
+chart.innerHTML=
+
+list.map(function(product){
+
+const width=
+(product.qty/maxQty)*100;
+
+return `
+<div class="barRow">
+
+<div class="barName"
+title="${html(product.name)}">
+${html(product.name)}
+</div>
+
+<div class="barTrack">
+<div class="barFill"
+style="width:${width}%">
+</div>
+</div>
+
+<div class="barValue">
+${product.qty}
+</div>
+
+</div>
+`;
+
+}).join("");
 
 }
 
@@ -701,303 +1155,310 @@ function render() {
    VENDEDORES
 ================================ */
 
-function renderSellers(sales) {
+function renderSellers(sales){
 
-    const sellers = {};
+const sellers={};
 
+sales.forEach(function(sale){
 
-    sales.forEach(function(sale) {
+const name=
+String(sale.seller||"Sin vendedor").trim()
+|| "Sin vendedor";
 
-        let name =
-            String(
-                sale.seller ||
-                "Sin vendedor"
-            ).trim();
+if(!sellers[name]){
 
+sellers[name]={
+tips:0,
+count:0
+};
 
-        if (!name) {
+}
 
-            name = "Sin vendedor";
+sellers[name].tips+=Number(sale.tip||0);
+sellers[name].count++;
 
-        }
+});
 
+const entries=
+Object.entries(sellers)
+.sort(function(a,b){
+return b[1].tips-a[1].tips;
+});
 
-        if (!sellers[name]) {
+if(entries.length===0){
 
-            sellers[name] = {
-                tip:0,
-                sales:0
-            };
+document.getElementById("sellers").innerHTML=
+'<div class="empty">Sin propinas para esta fecha.</div>';
 
-        }
+return;
 
+}
 
-        sellers[name].tip +=
-            Number(sale.tip || 0);
+document.getElementById("sellers").innerHTML=
 
+entries.map(function(entry){
 
-        sellers[name].sales++;
+const name=entry[0];
+const info=entry[1];
 
-    });
+return `
+<div class="seller">
 
+${html(name)}
 
-    const container =
-        document.getElementById("sellers");
+<strong>
+${money(info.tips)}
+</strong>
 
+<small>
+${info.count}
+venta${info.count===1?"":"s"}
+con propina
+</small>
 
-    const entries =
-        Object.entries(sellers)
-        .sort(function(a,b) {
+</div>
+`;
 
-            return b[1].tip - a[1].tip;
-
-        });
-
-
-    if (entries.length === 0) {
-
-        container.innerHTML =
-        '<div class="empty">' +
-        'No hay propinas para esta fecha.' +
-        '</div>';
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        entries.map(
-            function(entry) {
-
-                const name = entry[0];
-
-                const info = entry[1];
-
-
-                return `
-
-                <div class="seller-card">
-
-                    <div class="seller-name">
-                        ${escapeHTML(name)}
-                    </div>
-
-                    <div class="seller-total">
-                        ${money(info.tip)}
-                    </div>
-
-                    <small>
-                        ${info.sales}
-                        venta${info.sales === 1 ? "" : "s"}
-                        con propina
-                    </small>
-
-                </div>
-
-                `;
-
-            }
-        )
-        .join("");
+}).join("");
 
 }
 
 
 /* ================================
-   TABLA
+   DETALLE DE PROPINAS
 ================================ */
 
-function renderTable(sales) {
+function renderDetails(sales){
 
-    const rows =
-        document.getElementById("rows");
+const rows=
+document.getElementById("detailRows");
 
-    const empty =
-        document.getElementById("empty");
+const empty=
+document.getElementById("empty");
 
+if(sales.length===0){
 
-    const sorted =
-        [...sales].sort(
-            function(a,b) {
+rows.innerHTML="";
+empty.style.display="block";
+return;
 
-                const aTime =
-                    String(
-                        a.clientTime || ""
-                    );
+}
 
-                const bTime =
-                    String(
-                        b.clientTime || ""
-                    );
+empty.style.display="none";
 
-                return bTime.localeCompare(aTime);
+const sorted=
+[...sales].sort(function(a,b){
 
-            }
-        );
+return String(b.clientTime||"")
+.localeCompare(String(a.clientTime||""));
 
+});
 
-    if (sorted.length === 0) {
+rows.innerHTML=
 
-        rows.innerHTML = "";
+sorted.map(function(sale){
 
-        empty.style.display = "block";
+let method=
+String(sale.method||"");
 
-        return;
+if(method.toLowerCase()==="efectivo"){
+method="Efectivo";
+}
 
-    }
+if(method.toLowerCase()==="debito"){
+method="Débito";
+}
 
+return `
+<tr>
 
-    empty.style.display = "none";
+<td>${saleTime(sale)}</td>
 
+<td>
+${html(sale.seller||"—")}
+</td>
 
-    rows.innerHTML =
-        sorted.map(
-            function(sale) {
+<td>
+${html(sale.table||"—")}
+</td>
 
-                let payment =
-                    sale.method || "—";
+<td>
+${html(method||"—")}
+</td>
 
+<td>
+${money(sale.subtotal)}
+</td>
 
-                if (
-                    String(payment)
-                    .toLowerCase() === "efectivo"
-                ) {
+<td class="tip">
+${money(sale.tip)}
+</td>
 
-                    payment = "Efectivo";
+<td>
+${money(sale.total)}
+</td>
 
-                }
+</tr>
+`;
 
-
-                if (
-                    String(payment)
-                    .toLowerCase() === "debito"
-                ) {
-
-                    payment = "Débito";
-
-                }
-
-
-                return `
-
-                <tr>
-
-                    <td>
-                        ${getSaleTime(sale)}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            sale.seller || "—"
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            sale.table || "—"
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(payment)}
-                    </td>
-
-                    <td>
-                        ${money(sale.subtotal)}
-                    </td>
-
-                    <td class="tip">
-                        ${money(sale.tip)}
-                    </td>
-
-                    <td>
-                        ${money(sale.total)}
-                    </td>
-
-                </tr>
-
-                `;
-
-            }
-        )
-        .join("");
+}).join("");
 
 }
 
 
 /* ================================
-   CAMBIO DE FECHA
+   FECHA
 ================================ */
 
 document
 .getElementById("fecha")
-.addEventListener(
-    "change",
-    render
-);
-
+.addEventListener("change",render);
 
 setToday();
 
 
-/* ================================
-   SINCRONIZACIÓN FIRESTORE
-================================ */
-
-const statusBox =
-    document.getElementById("status");
-
+/* =================================================
+   FIREBASE
+   IMPORTANTE:
+   - ELIMINA 16/09/2026
+   - ELIMINA REGISTROS SIN FECHA
+   - SOLO CONSIDERA DESDE 17/09/2026
+================================================= */
 
 ventas.onSnapshot(
 
-    function(snapshot) {
+function(snapshot){
 
-        data =
-            snapshot.docs.map(
-                function(documento) {
+allSales=
+snapshot.docs
 
-                    return {
-                        id:documento.id,
-                        ...documento.data()
-                    };
+.map(function(doc){
 
-                }
-            );
+return {
+id:doc.id,
+...doc.data()
+};
 
+})
 
-        statusBox.textContent =
-            "✓ Conectado - " +
-            data.length +
-            " ventas sincronizadas";
+.filter(function(sale){
 
+let fecha=
+String(sale.date||"")
+.trim();
 
-        statusBox.className =
-            "status ok";
+/* REGISTROS SIN FECHA */
 
-
-        render();
-
-    },
+if(!fecha){
+return false;
+}
 
 
-    function(error) {
+/* DÍA DE PRUEBAS */
 
-        console.error(
-            "Error Firestore:",
-            error
-        );
-
-
-        statusBox.textContent =
-            "Error al conectar con Firebase: " +
-            error.message;
+if(
+fecha==="2026-09-16" ||
+fecha==="16/09/2026" ||
+fecha==="16-09-2026"
+){
+return false;
+}
 
 
-        statusBox.className =
-            "status error";
+/* FORMATO YYYY-MM-DD */
 
-    }
+if(/^\d{4}-\d{2}-\d{2}$/.test(fecha)){
+
+/*
+Todo lo anterior al 17/09/2026
+queda fuera de las estadísticas.
+*/
+
+if(fecha < "2026-09-17"){
+return false;
+}
+
+}
+
+
+/* FORMATO DD/MM/YYYY */
+
+if(/^\d{2}\/\d{2}\/\d{4}$/.test(fecha)){
+
+const partes=
+fecha.split("/");
+
+const normalizada=
+partes[2]+"-"+partes[1]+"-"+partes[0];
+
+if(normalizada < "2026-09-17"){
+return false;
+}
+
+/*
+Normalizamos para que toda la aplicación
+trabaje con YYYY-MM-DD.
+*/
+
+sale.date=normalizada;
+
+}
+
+
+/* FORMATO DD-MM-YYYY */
+
+if(/^\d{2}-\d{2}-\d{4}$/.test(fecha)){
+
+const partes=
+fecha.split("-");
+
+const normalizada=
+partes[2]+"-"+partes[1]+"-"+partes[0];
+
+if(normalizada < "2026-09-17"){
+return false;
+}
+
+sale.date=normalizada;
+
+}
+
+
+return true;
+
+});
+
+
+const status=
+document.getElementById("status");
+
+status.textContent=
+"✓ Conectado - "+
+allSales.length+
+" ventas sincronizadas";
+
+status.className=
+"status ok";
+
+render();
+
+},
+
+function(error){
+
+console.error(error);
+
+const status=
+document.getElementById("status");
+
+status.textContent=
+"Error Firebase: "+
+error.message;
+
+status.className=
+"status error";
+
+}
 
 );
 
