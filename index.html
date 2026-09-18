@@ -3,13 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Control - Fonda Pache Pache</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#172033}
-.wrap{max-width:1150px;margin:auto;padding:16px}
-header{background:#991f32;color:#fff;padding:22px 18px;border-radius:20px;margin-bottom:16px}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f3f4f6;
+color:#172033
+}
+
+.wrap{
+max-width:1150px;
+margin:auto;
+padding:16px
+}
+
+header{
+background:#991f32;
+color:white;
+padding:22px 18px;
+border-radius:20px;
+margin-bottom:16px
+}
+
 header h1{margin:0;font-size:27px}
 header p{margin:6px 0 0;opacity:.9}
 
@@ -42,7 +62,7 @@ padding:12px 15px;
 border:0;
 border-radius:10px;
 background:#991f32;
-color:#fff;
+color:white;
 font-weight:bold;
 cursor:pointer
 }
@@ -78,14 +98,17 @@ margin-bottom:8px
 }
 
 .card strong{font-size:22px}
-.green,.tip{color:#15803d}
+.green{color:#15803d}
 
 .panel{
 padding:15px;
 margin-bottom:15px
 }
 
-.panel h2{margin:0 0 12px;font-size:20px}
+.panel h2{
+margin:0 0 12px;
+font-size:20px
+}
 
 .close,.productStats{
 display:grid;
@@ -107,8 +130,15 @@ flex-wrap:wrap;
 margin-bottom:15px
 }
 
-.scopeBtn{background:#e5e7eb;color:#172033}
-.scopeBtn.active{background:#991f32;color:#fff}
+.scopeBtn{
+background:#e5e7eb;
+color:#172033
+}
+
+.scopeBtn.active{
+background:#991f32;
+color:white
+}
 
 .sellerGrid{
 display:grid;
@@ -143,7 +173,15 @@ border-bottom:1px solid #e5e7eb;
 text-align:left
 }
 
-th{font-size:13px;color:#6b7280}
+th{
+font-size:13px;
+color:#6b7280
+}
+
+.tip{
+color:#15803d;
+font-weight:bold
+}
 
 .general{
 font-weight:bold;
@@ -163,6 +201,11 @@ border:1px solid #e5e7eb;
 border-radius:15px
 }
 
+.chartTitle{
+font-weight:bold;
+margin-bottom:15px
+}
+
 .barRow{
 display:grid;
 grid-template-columns:minmax(100px,180px) 1fr 55px;
@@ -171,7 +214,12 @@ align-items:center;
 margin-bottom:11px
 }
 
-.barName{font-size:13px;font-weight:bold}
+.barName{
+font-size:13px;
+font-weight:bold;
+overflow:hidden;
+text-overflow:ellipsis
+}
 
 .barTrack{
 height:25px;
@@ -183,25 +231,45 @@ overflow:hidden
 .barFill{
 height:100%;
 background:#991f32;
-border-radius:20px
+border-radius:20px;
+min-width:2px
 }
 
-.barValue{text-align:right;font-weight:bold}
+.barValue{
+text-align:right;
+font-weight:bold
+}
 
 @media(max-width:720px){
-.cards,.close,.productStats{grid-template-columns:1fr 1fr}
+
+.cards,.close,.productStats{
+grid-template-columns:1fr 1fr
+}
+
 .card strong{font-size:19px}
+
+.barRow{
+grid-template-columns:95px 1fr 45px
+}
+
 }
 
 @media print{
-header,.toolbar,.status,.scopeBox{display:none!important}
-body{background:#fff}
+
+header,.toolbar,.status,.scopeBox{
+display:none!important
+}
+
+body{background:white}
+
 .panel,.cards{box-shadow:none}
+
 }
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
 <header>
@@ -210,17 +278,26 @@ body{background:#fff}
 </header>
 
 <div class="toolbar">
+
 <div>
 <label>Fecha</label><br>
 <input id="fecha" type="date">
 </div>
+
 <button onclick="setToday()">Hoy</button>
-<button onclick="window.print()">Imprimir resumen</button>
+
+<button onclick="window.print()">
+Imprimir resumen
+</button>
+
 </div>
 
 <div id="status" class="status">
 Conectando con Firebase...
 </div>
+
+
+<!-- RESUMEN -->
 
 <div class="cards">
 
@@ -266,7 +343,11 @@ Conectando con Firebase...
 
 </div>
 
+
+<!-- CIERRE -->
+
 <div class="panel">
+
 <h2>📊 Cierre del día</h2>
 
 <div class="close">
@@ -312,13 +393,20 @@ Conectando con Firebase...
 </div>
 
 </div>
+
 </div>
 
+
+<!-- RECAUDACION POR DIA -->
+
 <div class="panel">
+
 <h2>📅 Recaudación por día</h2>
 
 <div class="tablewrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Fecha</th>
@@ -333,106 +421,203 @@ Conectando con Firebase...
 <tbody id="dailyRows"></tbody>
 
 <tfoot>
+
 <tr class="general">
+
 <td>TOTAL GENERAL</td>
+
 <td id="generalCash">$0</td>
+
 <td id="generalDebit">$0</td>
+
 <td id="generalTips" class="tip">$0</td>
+
 <td id="generalCount">0</td>
+
 <td id="generalTotal" class="tip">$0</td>
+
 </tr>
+
 </tfoot>
+
 </table>
+
 </div>
+
 </div>
+
+
+<!-- PRODUCTOS -->
 
 <div class="panel">
+
 <h2>📦 Ventas de productos</h2>
 
+<p style="color:#6b7280">
+Cantidad real de unidades vendidas de cada producto.
+</p>
+
 <div class="scopeBox">
-<button id="btnDay" class="scopeBtn active"
+
+<button
+id="btnDay"
+class="scopeBtn active"
 onclick="setProductScope('day')">
 📅 Día seleccionado
 </button>
 
-<button id="btnAll" class="scopeBtn"
+<button
+id="btnAll"
+class="scopeBtn"
 onclick="setProductScope('all')">
 📊 Todo el período
 </button>
+
 </div>
+
 
 <div class="productStats">
 
 <div class="card">
+
 <small>🏆 Más vendido</small>
+
 <strong id="topProduct">—</strong>
-<small id="topProductQty">0 unidades</small>
+
+<small id="topProductQty">
+0 unidades
+</small>
+
 </div>
 
+
 <div class="card">
+
 <small>📉 Menos vendido</small>
+
 <strong id="lowProduct">—</strong>
-<small id="lowProductQty">0 unidades</small>
+
+<small id="lowProductQty">
+0 unidades
+</small>
+
 </div>
 
+
 <div class="card">
+
 <small>📦 Unidades totales</small>
-<strong id="productUnits">0</strong>
+
+<strong id="productUnits">
+0
+</strong>
+
 </div>
+
 
 <div class="card totalbox">
+
 <small>💰 Total vendido en productos</small>
-<strong id="productRevenue">$0</strong>
+
+<strong id="productRevenue">
+$0
+</strong>
+
 </div>
 
 </div>
+
+<br>
 
 <h3>📋 Detalle de productos vendidos</h3>
 
 <div class="tablewrap">
+
 <table>
+
 <thead>
+
 <tr>
 <th>#</th>
 <th>Producto</th>
 <th>Cantidad vendida</th>
 <th>Total vendido</th>
 </tr>
+
 </thead>
 
 <tbody id="productRows"></tbody>
 
 <tfoot>
+
 <tr class="general">
-<td colspan="2">TOTAL</td>
-<td id="productTableUnits">0</td>
-<td id="productTableRevenue">$0</td>
+
+<td colspan="2">
+TOTAL
+</td>
+
+<td id="productTableUnits">
+0
+</td>
+
+<td id="productTableRevenue">
+$0
+</td>
+
 </tr>
+
 </tfoot>
+
 </table>
 
-<div id="productEmpty" class="empty" style="display:none">
+<div
+id="productEmpty"
+class="empty"
+style="display:none">
+
 No existen productos vendidos para este período.
+
 </div>
+
 </div>
+
 
 <div class="chartBox">
-<h3>📊 Productos más vendidos</h3>
+
+<div class="chartTitle">
+📊 Productos más vendidos
+</div>
+
 <div id="productChart"></div>
-</div>
+
 </div>
 
+</div>
+
+
+<!-- VENDEDORES -->
+
 <div class="panel">
+
 <h2>👤 Propinas por vendedor</h2>
+
 <div id="sellers" class="sellerGrid"></div>
+
 </div>
 
+
+<!-- DETALLE -->
+
 <div class="panel">
+
 <h2>🧾 Detalle de propinas</h2>
 
 <div class="tablewrap">
+
 <table>
+
 <thead>
+
 <tr>
 <th>Hora</th>
 <th>Vendedor</th>
@@ -442,1261 +627,1379 @@ No existen productos vendidos para este período.
 <th>Propina</th>
 <th>Total</th>
 </tr>
+
 </thead>
 
 <tbody id="detailRows"></tbody>
+
 </table>
 
 <div id="empty" class="empty">
 No hay propinas para esta fecha.
 </div>
-</div>
+
 </div>
 
 </div>
+
+</div>
+
 
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
 
-<script>const firebaseConfig = {
-  apiKey: "AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
-  authDomain: "caja-pache-pache.firebaseapp.com",
-  projectId: "caja-pache-pache",
-  storageBucket: "caja-pache-pache.firebasestorage.app",
-  messagingSenderId: "59192876859",
-  appId: "1:59192876859:web:b184c5b3e63826bd50a11e",
-  measurementId: "G-QH9ELJJ5NT"
+<script>
+
+/* FIREBASE */
+
+const firebaseConfig={
+
+apiKey:"AIzaSyBT8wjvd63jZYyPoCWnPnmzonkf1eWDiBQ",
+
+authDomain:"caja-pache-pache.firebaseapp.com",
+
+projectId:"caja-pache-pache",
+
+storageBucket:"caja-pache-pache.firebasestorage.app",
+
+messagingSenderId:"59192876859",
+
+appId:"1:59192876859:web:b184c5b3e63826bd50a11e",
+
+measurementId:"G-QH9ELJJ5NT"
+
 };
 
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
-const ventas = db.collection("Ventas");
+const db=firebase.firestore();
 
-let allSales = [];
-let productScope = "day";
+const ventas=db.collection("Ventas");
+
+let allSales=[];
+
+let productScope="day";
 
 
-/* =========================================
-   FUNCIONES GENERALES
-========================================= */
+/* UTILIDADES */
 
 function money(value){
-  return "$" +
-    Math.round(Number(value) || 0)
-    .toLocaleString("es-CL");
+
+return "$"+
+Math.round(Number(value)||0)
+.toLocaleString("es-CL");
+
 }
+
 
 function todayKey(){
-  const d = new Date();
 
-  return d.getFullYear() + "-" +
-    String(d.getMonth() + 1).padStart(2,"0") + "-" +
-    String(d.getDate()).padStart(2,"0");
+const d=new Date();
+
+return d.getFullYear()+"-"+
+
+String(d.getMonth()+1)
+.padStart(2,"0")+"-"+
+
+String(d.getDate())
+.padStart(2,"0");
+
 }
+
 
 function setToday(){
-  document.getElementById("fecha").value = todayKey();
-  render();
+
+document.getElementById("fecha").value=
+todayKey();
+
+render();
+
 }
 
-function setText(id,value){
-  const el = document.getElementById(id);
-  if(el) el.textContent = value;
-}
-
-function setMoney(id,value){
-  setText(id,money(value));
-}
 
 function html(value){
-  return String(value ?? "")
-    .replace(/[&<>"']/g,function(c){
-      return {
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[c];
-    });
+
+return String(value??"")
+
+.replace(/[&<>"']/g,function(c){
+
+return {
+
+"&":"&amp;",
+
+"<":"&lt;",
+
+">":"&gt;",
+
+'"':"&quot;",
+
+"'":"&#039;"
+
+}[c];
+
+});
+
 }
+
 
 function displayDate(date){
 
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){
-    return date;
-  }
+if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){
 
-  const p = date.split("-");
+return date;
 
-  return p[2] + "/" + p[1] + "/" + p[0];
 }
 
+const p=date.split("-");
 
-/* =========================================
-   NORMALIZACIÓN DE FECHA
-========================================= */
+return p[2]+"/"+p[1]+"/"+p[0];
 
-function normalizeDate(value){
-
-  if(
-    value === null ||
-    value === undefined ||
-    value === ""
-  ){
-    return null;
-  }
-
-  if(typeof value === "string"){
-
-    const fecha = value.trim();
-
-    // Formato correcto de la caja:
-    // 2026-09-18
-    if(/^\d{4}-\d{2}-\d{2}$/.test(fecha)){
-      return fecha;
-    }
-
-    // ISO:
-    // 2026-09-18T...
-    if(/^\d{4}-\d{2}-\d{2}T/.test(fecha)){
-      return fecha.substring(0,10);
-    }
-
-    // 18/09/2026
-    if(/^\d{2}\/\d{2}\/\d{4}$/.test(fecha)){
-      const p = fecha.split("/");
-      return p[2] + "-" + p[1] + "-" + p[0];
-    }
-
-    // 18-09-2026
-    if(/^\d{2}-\d{2}-\d{4}$/.test(fecha)){
-      const p = fecha.split("-");
-      return p[2] + "-" + p[1] + "-" + p[0];
-    }
-  }
-
-  try{
-
-    if(
-      value &&
-      typeof value.toDate === "function"
-    ){
-
-      const d = value.toDate();
-
-      return d.getFullYear() + "-" +
-        String(d.getMonth()+1).padStart(2,"0") + "-" +
-        String(d.getDate()).padStart(2,"0");
-    }
-
-  }catch(e){}
-
-  try{
-
-    if(
-      value &&
-      typeof value.seconds === "number"
-    ){
-
-      const d = new Date(value.seconds * 1000);
-
-      return d.getFullYear() + "-" +
-        String(d.getMonth()+1).padStart(2,"0") + "-" +
-        String(d.getDate()).padStart(2,"0");
-    }
-
-  }catch(e){}
-
-  return null;
 }
 
-
-/* =========================================
-   FECHA REAL DE LA VENTA
-
-   IMPORTANTE:
-   La caja guarda "date" directamente.
-   Esa fecha tiene prioridad.
-========================================= */
-
-function saleDate(sale){
-
-  if(!sale){
-    return null;
-  }
-
-  /* 1. Fecha escrita por la caja */
-
-  const direct = normalizeDate(sale.date);
-
-  if(direct){
-    return direct;
-  }
-
-
-  /* 2. clientTime */
-
-  try{
-
-    if(sale.clientTime){
-
-      if(
-        typeof sale.clientTime === "string" &&
-        /^\d{4}-\d{2}-\d{2}T/.test(sale.clientTime)
-      ){
-        return sale.clientTime.substring(0,10);
-      }
-
-      const d = new Date(sale.clientTime);
-
-      if(!isNaN(d.getTime())){
-
-        return d.getFullYear() + "-" +
-          String(d.getMonth()+1).padStart(2,"0") + "-" +
-          String(d.getDate()).padStart(2,"0");
-      }
-    }
-
-  }catch(e){}
-
-
-  /* 3. createdAt de Firebase */
-
-  try{
-
-    if(
-      sale.createdAt &&
-      typeof sale.createdAt.toDate === "function"
-    ){
-
-      const d = sale.createdAt.toDate();
-
-      return d.getFullYear() + "-" +
-        String(d.getMonth()+1).padStart(2,"0") + "-" +
-        String(d.getDate()).padStart(2,"0");
-    }
-
-  }catch(e){}
-
-
-  try{
-
-    if(
-      sale.createdAt &&
-      typeof sale.createdAt.seconds === "number"
-    ){
-
-      const d =
-        new Date(sale.createdAt.seconds * 1000);
-
-      return d.getFullYear() + "-" +
-        String(d.getMonth()+1).padStart(2,"0") + "-" +
-        String(d.getDate()).padStart(2,"0");
-    }
-
-  }catch(e){}
-
-  return null;
-}
-
-
-/* =========================================
-   VALIDAR VENTAS
-
-   16/09 y anteriores = fuera
-   17/09 en adelante = válido
-========================================= */
-
-function validSale(sale){
-
-  const fecha = saleDate(sale);
-
-  if(!fecha){
-    return false;
-  }
-
-  if(fecha < "2026-09-17"){
-    return false;
-  }
-
-  return true;
-}
-
-
-/* =========================================
-   HORA
-========================================= */
 
 function saleTime(sale){
 
-  try{
+try{
 
-    if(
-      sale.createdAt &&
-      typeof sale.createdAt.toDate === "function"
-    ){
+if(
+sale.createdAt &&
+typeof sale.createdAt.toDate==="function"
+){
 
-      return sale.createdAt
-        .toDate()
-        .toLocaleTimeString(
-          "es-CL",
-          {
-            hour:"2-digit",
-            minute:"2-digit"
-          }
-        );
-    }
+return sale.createdAt
 
-    if(sale.clientTime){
+.toDate()
 
-      return new Date(sale.clientTime)
-        .toLocaleTimeString(
-          "es-CL",
-          {
-            hour:"2-digit",
-            minute:"2-digit"
-          }
-        );
-    }
+.toLocaleTimeString(
+"es-CL",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
 
-  }catch(e){}
+}
 
-  return "—";
+if(sale.clientTime){
+
+return new Date(sale.clientTime)
+
+.toLocaleTimeString(
+"es-CL",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}
+
+}catch(e){}
+
+return "—";
+
 }
 
 
-/* =========================================
-   RESUMEN FECHA SELECCIONADA
-========================================= */
+/* =================================
+   NORMALIZAR FECHA
+================================= */
+
+function normalizeDate(value){
+
+let fecha=
+String(value||"").trim();
+
+if(!fecha){
+return null;
+}
+
+/* YYYY-MM-DD */
+
+if(/^\d{4}-\d{2}-\d{2}$/.test(fecha)){
+
+return fecha;
+
+}
+
+/* DD/MM/YYYY */
+
+if(/^\d{2}\/\d{2}\/\d{4}$/.test(fecha)){
+
+const p=fecha.split("/");
+
+return p[2]+"-"+p[1]+"-"+p[0];
+
+}
+
+/* DD-MM-YYYY */
+
+if(/^\d{2}-\d{2}-\d{4}$/.test(fecha)){
+
+const p=fecha.split("-");
+
+return p[2]+"-"+p[1]+"-"+p[0];
+
+}
+
+return null;
+
+}
+
+
+/* =================================
+   VALIDAR VENTA
+================================= */
+
+function validSale(sale){
+
+const fecha=
+normalizeDate(sale.date);
+
+/* SIN FECHA */
+
+if(!fecha){
+return false;
+}
+
+/* 16/09 Y TODO LO ANTERIOR */
+
+if(fecha < "2026-09-17"){
+return false;
+}
+
+return true;
+
+}
+
+
+/* RESUMEN */
 
 function render(){
 
-  const selected =
-    document.getElementById("fecha").value;
+const selected=
+document.getElementById("fecha").value;
 
-  const daySales =
-    allSales.filter(function(sale){
-      return saleDate(sale) === selected;
-    });
+const daySales=
+allSales.filter(function(sale){
 
+return sale.date===selected;
 
-  const tipped =
-    daySales.filter(function(sale){
-      return Number(sale.tip || 0) > 0;
-    });
+});
 
 
-  const tips =
-    tipped.reduce(function(sum,sale){
-      return sum + Number(sale.tip || 0);
-    },0);
+const tipped=
+daySales.filter(function(sale){
+
+return Number(sale.tip||0)>0;
+
+});
 
 
-  const cashTips =
-    tipped
-    .filter(function(sale){
-      return String(sale.method || "")
-        .toLowerCase() === "efectivo";
-    })
-    .reduce(function(sum,sale){
-      return sum + Number(sale.tip || 0);
-    },0);
+const tips=
+tipped.reduce(function(sum,sale){
+
+return sum+Number(sale.tip||0);
+
+},0);
 
 
-  const debitTips =
-    tipped
-    .filter(function(sale){
-      return String(sale.method || "")
-        .toLowerCase() === "debito";
-    })
-    .reduce(function(sum,sale){
-      return sum + Number(sale.tip || 0);
-    },0);
+const cashTips=
+tipped
+
+.filter(function(sale){
+
+return String(sale.method||"")
+.toLowerCase()==="efectivo";
+
+})
+
+.reduce(function(sum,sale){
+
+return sum+Number(sale.tip||0);
+
+},0);
 
 
-  const subtotal =
-    daySales.reduce(function(sum,sale){
-      return sum + Number(sale.subtotal || 0);
-    },0);
+const debitTips=
+tipped
+
+.filter(function(sale){
+
+return String(sale.method||"")
+.toLowerCase()==="debito";
+
+})
+
+.reduce(function(sum,sale){
+
+return sum+Number(sale.tip||0);
+
+},0);
 
 
-  const total =
-    daySales.reduce(function(sum,sale){
-      return sum + Number(sale.total || 0);
-    },0);
+const subtotal=
+daySales.reduce(function(sum,sale){
+
+return sum+Number(sale.subtotal||0);
+
+},0);
 
 
-  setMoney("tips",tips);
-  setText("tipCount",tipped.length);
-  setMoney("cashTips",cashTips);
-  setMoney("debitTips",debitTips);
+const total=
+daySales.reduce(function(sum,sale){
 
-  setMoney("salesTotal",total);
-  setMoney("subtotal",subtotal);
-  setText("saleCount",daySales.length);
+return sum+Number(sale.total||0);
 
-  setMoney(
-    "averageTip",
-    tipped.length
-      ? tips / tipped.length
-      : 0
-  );
+},0);
 
 
-  renderClose(daySales);
+document.getElementById("tips").textContent=
+money(tips);
 
-  renderDaily();
+document.getElementById("tipCount").textContent=
+tipped.length;
 
-  renderProducts();
+document.getElementById("cashTips").textContent=
+money(cashTips);
 
-  renderSellers(tipped);
+document.getElementById("debitTips").textContent=
+money(debitTips);
 
-  renderDetails(tipped);
+document.getElementById("salesTotal").textContent=
+money(total);
+
+document.getElementById("subtotal").textContent=
+money(subtotal);
+
+document.getElementById("saleCount").textContent=
+daySales.length;
+
+document.getElementById("averageTip").textContent=
+
+money(
+tipped.length
+? tips/tipped.length
+:0
+);
+
+
+renderClose(daySales);
+
+renderDaily();
+
+renderProducts();
+
+renderSellers(tipped);
+
+renderDetails(tipped);
+
 }
 
 
-/* =========================================
-   CIERRE DEL DÍA
-========================================= */
+/* CIERRE */
 
 function renderClose(sales){
 
-  let cash = 0;
-  let debit = 0;
-  let tips = 0;
-  let cashTip = 0;
-  let debitTip = 0;
-  let subtotal = 0;
-  let total = 0;
+let cash=0;
+
+let debit=0;
+
+let tips=0;
+
+let cashTip=0;
+
+let debitTip=0;
+
+let subtotal=0;
+
+let total=0;
 
 
-  sales.forEach(function(sale){
+sales.forEach(function(sale){
 
-    const method =
-      String(sale.method || "")
-      .toLowerCase();
+const method=
+String(sale.method||"")
+.toLowerCase();
 
-    const saleTotal =
-      Number(sale.total || 0);
+const saleTotal=
+Number(sale.total||0);
 
-    const tip =
-      Number(sale.tip || 0);
-
-
-    if(method === "efectivo"){
-      cash += saleTotal;
-      cashTip += tip;
-    }
+const saleTip=
+Number(sale.tip||0);
 
 
-    if(method === "debito"){
-      debit += saleTotal;
-      debitTip += tip;
-    }
+if(method==="efectivo"){
 
+cash+=saleTotal;
 
-    tips += tip;
+cashTip+=saleTip;
 
-    subtotal +=
-      Number(sale.subtotal || 0);
-
-    total += saleTotal;
-  });
-
-
-  setMoney("cashTotal",cash);
-
-  setMoney("debitTotal",debit);
-
-  setMoney("closeCashTip",cashTip);
-
-  setMoney("closeDebitTip",debitTip);
-
-  setMoney("closeSubtotal",subtotal);
-
-  setMoney("closeTips",tips);
-
-  setText("closeCount",sales.length);
-
-  setMoney("closeTotal",total);
 }
 
 
-/* =========================================
+if(method==="debito"){
+
+debit+=saleTotal;
+
+debitTip+=saleTip;
+
+}
+
+
+tips+=saleTip;
+
+subtotal+=
+Number(sale.subtotal||0);
+
+total+=saleTotal;
+
+});
+
+
+document.getElementById("cashTotal").textContent=
+money(cash);
+
+document.getElementById("debitTotal").textContent=
+money(debit);
+
+document.getElementById("closeCashTip").textContent=
+money(cashTip);
+
+document.getElementById("closeDebitTip").textContent=
+money(debitTip);
+
+document.getElementById("closeSubtotal").textContent=
+money(subtotal);
+
+document.getElementById("closeTips").textContent=
+money(tips);
+
+document.getElementById("closeCount").textContent=
+sales.length;
+
+document.getElementById("closeTotal").textContent=
+money(total);
+
+}
+
+
+/* =====================================
    RECAUDACIÓN POR DÍA
-========================================= */
+   SIN "SIN FECHA"
+===================================== */
 
 function renderDaily(){
 
-  const days = {};
+const days={};
 
 
-  allSales.forEach(function(sale){
+allSales.forEach(function(sale){
 
-    const date = saleDate(sale);
-
-    if(!date){
-      return;
-    }
-
-    if(date < "2026-09-17"){
-      return;
-    }
+const date=
+normalizeDate(sale.date);
 
 
-    if(!days[date]){
+/* BLOQUEO DEFINITIVO SIN FECHA */
 
-      days[date] = {
-        cash:0,
-        debit:0,
-        tips:0,
-        count:0,
-        total:0
-      };
-    }
+if(!date){
+return;
+}
 
 
-    const method =
-      String(sale.method || "")
-      .toLowerCase();
+/* BLOQUEO DEFINITIVO 16/09 */
 
-    const total =
-      Number(sale.total || 0);
-
-
-    if(method === "efectivo"){
-      days[date].cash += total;
-    }
+if(date < "2026-09-17"){
+return;
+}
 
 
-    if(method === "debito"){
-      days[date].debit += total;
-    }
+if(!days[date]){
+
+days[date]={
+
+cash:0,
+
+debit:0,
+
+tips:0,
+
+count:0,
+
+total:0
+
+};
+
+}
 
 
-    days[date].tips +=
-      Number(sale.tip || 0);
-
-    days[date].total += total;
-
-    days[date].count++;
-  });
+const method=
+String(sale.method||"")
+.toLowerCase();
 
 
-  const dates =
-    Object.keys(days).sort();
+const saleTotal=
+Number(sale.total||0);
 
 
-  let generalCash = 0;
-  let generalDebit = 0;
-  let generalTips = 0;
-  let generalCount = 0;
-  let generalTotal = 0;
+if(method==="efectivo"){
+
+days[date].cash+=saleTotal;
+
+}
 
 
-  const rows =
-    document.getElementById("dailyRows");
+if(method==="debito"){
+
+days[date].debit+=saleTotal;
+
+}
 
 
-  rows.innerHTML =
-    dates.map(function(date){
-
-      const day = days[date];
-
-      generalCash += day.cash;
-
-      generalDebit += day.debit;
-
-      generalTips += day.tips;
-
-      generalCount += day.count;
-
-      generalTotal += day.total;
+days[date].tips+=
+Number(sale.tip||0);
 
 
-      return `
-        <tr>
-          <td>
-            <strong>${displayDate(date)}</strong>
-          </td>
-
-          <td>${money(day.cash)}</td>
-
-          <td>${money(day.debit)}</td>
-
-          <td class="tip">
-            ${money(day.tips)}
-          </td>
-
-          <td>${day.count}</td>
-
-          <td>
-            <strong>${money(day.total)}</strong>
-          </td>
-        </tr>
-      `;
-
-    }).join("");
+days[date].total+=
+saleTotal;
 
 
-  setMoney(
-    "generalCash",
-    generalCash
-  );
+days[date].count++;
 
-  setMoney(
-    "generalDebit",
-    generalDebit
-  );
+});
 
-  setMoney(
-    "generalTips",
-    generalTips
-  );
 
-  setText(
-    "generalCount",
-    generalCount
-  );
+const dates=
+Object.keys(days)
 
-  setMoney(
-    "generalTotal",
-    generalTotal
-  );</script>
-/* =========================================
-   PRODUCTOS VENDIDOS
-========================================= */
+.filter(function(date){
+
+return /^\d{4}-\d{2}-\d{2}$/.test(date);
+
+})
+
+.filter(function(date){
+
+return date>="2026-09-17";
+
+})
+
+.sort();
+
+
+let gCash=0;
+
+let gDebit=0;
+
+let gTips=0;
+
+let gCount=0;
+
+let gTotal=0;
+
+
+document.getElementById("dailyRows").innerHTML=
+
+dates.map(function(date){
+
+const d=days[date];
+
+gCash+=d.cash;
+
+gDebit+=d.debit;
+
+gTips+=d.tips;
+
+gCount+=d.count;
+
+gTotal+=d.total;
+
+
+return `
+
+<tr>
+
+<td>
+<strong>
+${displayDate(date)}
+</strong>
+</td>
+
+<td>
+${money(d.cash)}
+</td>
+
+<td>
+${money(d.debit)}
+</td>
+
+<td class="tip">
+${money(d.tips)}
+</td>
+
+<td>
+${d.count}
+</td>
+
+<td>
+<strong>
+${money(d.total)}
+</strong>
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+
+document.getElementById("generalCash").textContent=
+money(gCash);
+
+document.getElementById("generalDebit").textContent=
+money(gDebit);
+
+document.getElementById("generalTips").textContent=
+money(gTips);
+
+document.getElementById("generalCount").textContent=
+gCount;
+
+document.getElementById("generalTotal").textContent=
+money(gTotal);
+
+}
+
+
+/* PRODUCTOS */
 
 function setProductScope(scope){
 
-  productScope = scope;
+productScope=scope;
 
-  document.getElementById("btnDay")
-    .classList.toggle(
-      "active",
-      scope === "day"
-    );
+document.getElementById("btnDay")
+.classList.toggle(
+"active",
+scope==="day"
+);
 
-  document.getElementById("btnAll")
-    .classList.toggle(
-      "active",
-      scope === "all"
-    );
+document.getElementById("btnAll")
+.classList.toggle(
+"active",
+scope==="all"
+);
 
-  renderProducts();
+renderProducts();
+
 }
 
 
 function renderProducts(){
 
-  const selected =
-    document.getElementById("fecha").value;
+const selected=
+document.getElementById("fecha").value;
 
-  let sourceSales = [];
 
-  if(productScope === "all"){
+const source=
+productScope==="all"
 
-    sourceSales = allSales;
+? allSales
 
-  }else{
+: allSales.filter(function(sale){
 
-    sourceSales =
-      allSales.filter(function(sale){
+return sale.date===selected;
 
-        return saleDate(sale) === selected;
+});
 
-      });
-  }
 
+const products={};
 
-  const products = {};
 
+source.forEach(function(sale){
 
-  sourceSales.forEach(function(sale){
-
-    const items =
-      Array.isArray(sale.items)
-        ? sale.items
-        : [];
-
-
-    items.forEach(function(item){
-
-      if(!item){
-        return;
-      }
-
-
-      const name =
-        String(
-          item.name ||
-          item.nombre ||
-          item.product ||
-          item.producto ||
-          "Producto sin nombre"
-        ).trim();
-
-
-      let qty =
-        Number(
-          item.qty ??
-          item.quantity ??
-          item.cantidad ??
-          1
-        );
-
-
-      if(
-        !Number.isFinite(qty) ||
-        qty <= 0
-      ){
-        qty = 1;
-      }
-
-
-      let total =
-        Number(
-          item.total ??
-          item.totalPrice ??
-          item.subtotal ??
-          0
-        );
-
-
-      if(!total){
-
-        const price =
-          Number(
-            item.price ??
-            item.precio ??
-            0
-          );
-
-        total = price * qty;
-      }
-
-
-      const key =
-        name.toLowerCase();
-
-
-      if(!products[key]){
-
-        products[key] = {
-          name:name,
-          qty:0,
-          revenue:0
-        };
-
-      }
-
-
-      products[key].qty += qty;
-
-      products[key].revenue += total;
-
-    });
-
-  });
-
-
-  const list =
-    Object.values(products)
-      .sort(function(a,b){
-
-        return (
-          b.qty - a.qty ||
-          b.revenue - a.revenue
-        );
-
-      });
-
-
-  const units =
-    list.reduce(function(sum,p){
-
-      return sum + p.qty;
-
-    },0);
-
-
-  const revenue =
-    list.reduce(function(sum,p){
-
-      return sum + p.revenue;
-
-    },0);
-
-
-  const top =
-    list.length
-      ? list[0]
-      : null;
-
-
-  const low =
-    list.length
-      ? [...list].sort(function(a,b){
-
-          return (
-            a.qty - b.qty ||
-            a.revenue - b.revenue
-          );
-
-        })[0]
-      : null;
-
-
-  setText(
-    "topProduct",
-    top ? top.name : "—"
-  );
-
-
-  setText(
-    "topProductQty",
-    top
-      ? top.qty + " unidades"
-      : "0 unidades"
-  );
-
-
-  setText(
-    "lowProduct",
-    low ? low.name : "—"
-  );
-
-
-  setText(
-    "lowProductQty",
-    low
-      ? low.qty + " unidades"
-      : "0 unidades"
-  );
-
-
-  setText(
-    "productUnits",
-    units.toLocaleString("es-CL")
-  );
-
-
-  setMoney(
-    "productRevenue",
-    revenue
-  );
-
-
-  setText(
-    "productTableUnits",
-    units.toLocaleString("es-CL")
-  );
-
-
-  setMoney(
-    "productTableRevenue",
-    revenue
-  );
-
-
-  const rows =
-    document.getElementById("productRows");
-
-  const empty =
-    document.getElementById("productEmpty");
-
-
-  if(!list.length){
-
-    rows.innerHTML = "";
-
-    empty.style.display = "block";
-
-  }else{
-
-    empty.style.display = "none";
-
-
-    rows.innerHTML =
-      list.map(function(p,index){
-
-        return `
-          <tr>
-
-            <td>
-              <strong>${index + 1}</strong>
-            </td>
-
-            <td>
-              <strong>${html(p.name)}</strong>
-            </td>
-
-            <td>
-              <strong>${p.qty}</strong>
-            </td>
-
-            <td>
-              ${money(p.revenue)}
-            </td>
-
-          </tr>
-        `;
-
-      }).join("");
-
-  }
-
-
-  /* GRÁFICO */
-
-  const chart =
-    document.getElementById("productChart");
-
-
-  if(!list.length){
-
-    chart.innerHTML =
-      '<div class="empty">No existen productos para graficar.</div>';
-
-    return;
-
-  }
-
-
-  const maxQty =
-    Math.max(
-      ...list.map(function(p){
-        return p.qty;
-      }),
-      1
-    );
-
-
-  chart.innerHTML =
-    list.map(function(p){
-
-      const width =
-        (p.qty / maxQty) * 100;
-
-
-      return `
-        <div class="barRow">
-
-          <div class="barName">
-            ${html(p.name)}
-          </div>
-
-          <div class="barTrack">
-
-            <div
-              class="barFill"
-              style="width:${width}%">
-            </div>
-
-          </div>
-
-          <div class="barValue">
-            ${p.qty}
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
+if(!Array.isArray(sale.items)){
+return;
 }
 
 
-/* =========================================
-   PROPINAS POR VENDEDOR
-========================================= */
+sale.items.forEach(function(item){
 
-function renderSellers(sales){
-
-  const sellers = {};
-
-
-  sales.forEach(function(sale){
-
-    const name =
-      String(
-        sale.seller ||
-        "Sin vendedor"
-      ).trim() ||
-      "Sin vendedor";
-
-
-    if(!sellers[name]){
-
-      sellers[name] = {
-        tips:0,
-        count:0
-      };
-
-    }
-
-
-    sellers[name].tips +=
-      Number(sale.tip || 0);
-
-    sellers[name].count++;
-
-  });
-
-
-  const entries =
-    Object.entries(sellers)
-      .sort(function(a,b){
-
-        return b[1].tips - a[1].tips;
-
-      });
-
-
-  const box =
-    document.getElementById("sellers");
-
-
-  if(!entries.length){
-
-    box.innerHTML =
-      '<div class="empty">Sin propinas para esta fecha.</div>';
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-    entries.map(function(entry){
-
-      const name = entry[0];
-      const data = entry[1];
-
-
-      return `
-        <div class="seller">
-
-          ${html(name)}
-
-          <strong>
-            ${money(data.tips)}
-          </strong>
-
-          <small>
-            ${data.count}
-            venta${data.count === 1 ? "" : "s"}
-            con propina
-          </small>
-
-        </div>
-      `;
-
-    }).join("");
+if(!item){
+return;
 }
 
 
-/* =========================================
-   DETALLE DE PROPINAS
-========================================= */
+const name=
+String(
 
-function renderDetails(sales){
+item.name ||
 
-  const rows =
-    document.getElementById("detailRows");
+item.nombre ||
 
-  const empty =
-    document.getElementById("empty");
+item.product ||
 
+item.producto ||
 
-  if(!sales.length){
+"Producto sin nombre"
 
-    rows.innerHTML = "";
+).trim();
 
-    empty.style.display = "block";
 
-    return;
+let qty=
+Number(
 
-  }
+item.qty ??
 
+item.quantity ??
 
-  empty.style.display = "none";
+item.cantidad ??
 
-
-  const sorted =
-    [...sales].sort(function(a,b){
-
-      return String(
-        b.clientTime || ""
-      ).localeCompare(
-        String(
-          a.clientTime || ""
-        )
-      );
-
-    });
-
-
-  rows.innerHTML =
-    sorted.map(function(sale){
-
-      let method =
-        String(
-          sale.method || ""
-        );
-
-
-      if(
-        method.toLowerCase() ===
-        "efectivo"
-      ){
-        method = "Efectivo";
-      }
-
-
-      if(
-        method.toLowerCase() ===
-        "debito"
-      ){
-        method = "Débito";
-      }
-
-
-      return `
-        <tr>
-
-          <td>
-            ${saleTime(sale)}
-          </td>
-
-          <td>
-            ${html(sale.seller || "—")}
-          </td>
-
-          <td>
-            ${html(sale.table || "—")}
-          </td>
-
-          <td>
-            ${html(method || "—")}
-          </td>
-
-          <td>
-            ${money(sale.subtotal)}
-          </td>
-
-          <td class="tip">
-            ${money(sale.tip)}
-          </td>
-
-          <td>
-            ${money(sale.total)}
-          </td>
-
-        </tr>
-      `;
-
-    }).join("");
-}
-
-
-/* =========================================
-   CAMBIO DE FECHA
-========================================= */
-
-document
-  .getElementById("fecha")
-  .addEventListener(
-    "change",
-    render
-  );
-
-
-/* =========================================
-   FIREBASE - SINCRONIZACIÓN
-========================================= */
-
-ventas.onSnapshot(
-
-  function(snapshot){
-
-    /*
-      NO modificamos ni borramos
-      ningún documento de Firebase.
-
-      Solamente leemos las ventas.
-    */
-
-    allSales =
-      snapshot.docs
-        .map(function(doc){
-
-          return {
-            id:doc.id,
-            ...doc.data()
-          };
-
-        })
-
-        .filter(function(sale){
-
-          return validSale(sale);
-
-        });
-
-
-    const status =
-      document.getElementById("status");
-
-
-    status.textContent =
-      "✓ Conectado - " +
-      allSales.length +
-      " ventas sincronizadas";
-
-
-    status.className =
-      "status ok";
-
-
-    render();
-
-  },
-
-  function(error){
-
-    console.error(
-      "Error Firebase:",
-      error
-    );
-
-
-    const status =
-      document.getElementById("status");
-
-
-    status.textContent =
-      "Error Firebase: " +
-      error.message;
-
-
-    status.className =
-      "status error";
-
-  }
+1
 
 );
 
 
-/* =========================================
-   INICIO
-========================================= */
+if(
+!Number.isFinite(qty) ||
+qty<=0
+){
 
-document.getElementById("fecha").value =
-  todayKey();
+qty=1;
+
+}
+
+
+let total=
+Number(
+
+item.total ??
+
+item.totalPrice ??
+
+item.subtotal ??
+
+0
+
+);
+
+
+if(!total){
+
+const price=
+Number(
+
+item.price ??
+
+item.precio ??
+
+0
+
+);
+
+total=
+price*qty;
+
+}
+
+
+const key=
+name.toLowerCase();
+
+
+if(!products[key]){
+
+products[key]={
+
+name:name,
+
+qty:0,
+
+revenue:0
+
+};
+
+}
+
+
+products[key].qty+=qty;
+
+products[key].revenue+=total;
+
+});
+
+});
+
+
+const list=
+Object.values(products)
+
+.sort(function(a,b){
+
+if(b.qty!==a.qty){
+
+return b.qty-a.qty;
+
+}
+
+return b.revenue-a.revenue;
+
+});
+
+
+const totalUnits=
+list.reduce(function(sum,p){
+
+return sum+p.qty;
+
+},0);
+
+
+const totalRevenue=
+list.reduce(function(sum,p){
+
+return sum+p.revenue;
+
+},0);
+
+
+const top=
+list.length
+?list[0]
+:null;
+
+
+const low=
+list.length
+
+?[...list].sort(function(a,b){
+
+if(a.qty!==b.qty){
+
+return a.qty-b.qty;
+
+}
+
+return a.revenue-b.revenue;
+
+})[0]
+
+:null;
+
+
+document.getElementById("topProduct").textContent=
+
+top
+?top.name
+:"—";
+
+
+document.getElementById("topProductQty").textContent=
+
+top
+?top.qty+" unidades"
+:"0 unidades";
+
+
+document.getElementById("lowProduct").textContent=
+
+low
+?low.name
+:"—";
+
+
+document.getElementById("lowProductQty").textContent=
+
+low
+?low.qty+" unidades"
+:"0 unidades";
+
+
+document.getElementById("productUnits").textContent=
+
+totalUnits.toLocaleString("es-CL");
+
+
+document.getElementById("productRevenue").textContent=
+
+money(totalRevenue);
+
+
+document.getElementById("productTableUnits").textContent=
+
+totalUnits.toLocaleString("es-CL");
+
+
+document.getElementById("productTableRevenue").textContent=
+
+money(totalRevenue);
+
+
+const rows=
+document.getElementById("productRows");
+
+
+const empty=
+document.getElementById("productEmpty");
+
+
+if(list.length===0){
+
+rows.innerHTML="";
+
+empty.style.display=
+"block";
+
+}else{
+
+empty.style.display=
+"none";
+
+
+rows.innerHTML=
+
+list.map(function(product,index){
+
+return `
+
+<tr>
+
+<td>
+<strong>
+${index+1}
+</strong>
+</td>
+
+<td>
+<strong>
+${html(product.name)}
+</strong>
+</td>
+
+<td>
+<strong>
+${product.qty}
+</strong>
+</td>
+
+<td>
+${money(product.revenue)}
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+
+const chart=
+document.getElementById("productChart");
+
+
+if(list.length===0){
+
+chart.innerHTML=
+
+'<div class="empty">'+
+'No existen productos para graficar.'+
+'</div>';
+
+return;
+
+}
+
+
+const maxQty=
+
+Math.max(
+
+...list.map(function(p){
+
+return p.qty;
+
+}),
+
+1
+
+);
+
+
+chart.innerHTML=
+
+list.map(function(product){
+
+const width=
+(product.qty/maxQty)*100;
+
+
+return `
+
+<div class="barRow">
+
+<div
+class="barName"
+title="${html(product.name)}">
+
+${html(product.name)}
+
+</div>
+
+<div class="barTrack">
+
+<div
+class="barFill"
+style="width:${width}%">
+</div>
+
+</div>
+
+<div class="barValue">
+
+${product.qty}
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* VENDEDORES */
+
+function renderSellers(sales){
+
+const sellers={};
+
+
+sales.forEach(function(sale){
+
+const name=
+
+String(
+sale.seller||
+"Sin vendedor"
+).trim()
+
+||
+
+"Sin vendedor";
+
+
+if(!sellers[name]){
+
+sellers[name]={
+
+tips:0,
+
+count:0
+
+};
+
+}
+
+
+sellers[name].tips+=
+Number(sale.tip||0);
+
+
+sellers[name].count++;
+
+});
+
+
+const entries=
+Object.entries(sellers)
+
+.sort(function(a,b){
+
+return b[1].tips-a[1].tips;
+
+});
+
+
+if(entries.length===0){
+
+document.getElementById("sellers").innerHTML=
+
+'<div class="empty">'+
+'Sin propinas para esta fecha.'+
+'</div>';
+
+return;
+
+}
+
+
+document.getElementById("sellers").innerHTML=
+
+entries.map(function(entry){
+
+const name=entry[0];
+
+const info=entry[1];
+
+
+return `
+
+<div class="seller">
+
+${html(name)}
+
+<strong>
+
+${money(info.tips)}
+
+</strong>
+
+<small>
+
+${info.count}
+
+venta${info.count===1?"":"s"}
+
+con propina
+
+</small>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* DETALLE */
+
+function renderDetails(sales){
+
+const rows=
+document.getElementById("detailRows");
+
+const empty=
+document.getElementById("empty");
+
+
+if(sales.length===0){
+
+rows.innerHTML="";
+
+empty.style.display=
+"block";
+
+return;
+
+}
+
+
+empty.style.display=
+"none";
+
+
+const sorted=
+[...sales]
+
+.sort(function(a,b){
+
+return String(b.clientTime||"")
+
+.localeCompare(
+String(a.clientTime||"")
+);
+
+});
+
+
+rows.innerHTML=
+
+sorted.map(function(sale){
+
+let method=
+String(sale.method||"");
+
+
+if(method.toLowerCase()==="efectivo"){
+
+method="Efectivo";
+
+}
+
+
+if(method.toLowerCase()==="debito"){
+
+method="Débito";
+
+}
+
+
+return `
+
+<tr>
+
+<td>
+${saleTime(sale)}
+</td>
+
+<td>
+${html(sale.seller||"—")}
+</td>
+
+<td>
+${html(sale.table||"—")}
+</td>
+
+<td>
+${html(method||"—")}
+</td>
+
+<td>
+${money(sale.subtotal)}
+</td>
+
+<td class="tip">
+${money(sale.tip)}
+</td>
+
+<td>
+${money(sale.total)}
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+
+/* FECHA */
+
+document
+.getElementById("fecha")
+.addEventListener(
+"change",
+render
+);
+
+
+setToday();
+
+
+/* ============================================
+   FIREBASE EN TIEMPO REAL
+
+   SOLO SE ACEPTAN:
+   - fechas válidas
+   - desde 17/09/2026
+============================================ */
+
+ventas.onSnapshot(
+
+function(snapshot){
+
+allSales=
+
+snapshot.docs
+
+.map(function(doc){
+
+return {
+
+id:doc.id,
+
+...doc.data()
+
+};
+
+})
+
+.map(function(sale){
+
+/*
+Normalizamos la fecha ANTES
+de incorporarla a la aplicación.
+*/
+
+const fecha=
+normalizeDate(sale.date);
+
+if(fecha){
+
+sale.date=fecha;
+
+}
+
+return sale;
+
+})
+
+.filter(function(sale){
+
+/*
+Filtro central.
+
+Sin fecha = fuera.
+16/09 = fuera.
+Anterior al 17/09 = fuera.
+*/
+
+return validSale(sale);
+
+});
+
+
+const status=
+document.getElementById("status");
+
+
+status.textContent=
+
+"✓ Conectado - "+
+
+allSales.length+
+
+" ventas sincronizadas";
+
+
+status.className=
+"status ok";
+
 
 render();
+
+},
+
+function(error){
+
+console.error(error);
+
+
+const status=
+document.getElementById("status");
+
+
+status.textContent=
+
+"Error Firebase: "+
+
+error.message;
+
+
+status.className=
+"status error";
+
+}
+
+);
 
 </script>
 
