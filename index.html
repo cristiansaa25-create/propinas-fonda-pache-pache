@@ -845,7 +845,55 @@ return p[2]+"-"+p[1]+"-"+p[0];
 return null;
 
 }
+/* =================================
+   FECHA REAL DE LA VENTA
+================================= */
 
+function saleDate(sale){
+
+  /* 1. Fecha guardada normalmente */
+  const directDate = normalizeDate(sale.date);
+
+  if(directDate){
+    return directDate;
+  }
+
+  /* 2. Fecha creada por Firebase */
+  try{
+
+    if(
+      sale.createdAt &&
+      typeof sale.createdAt.toDate === "function"
+    ){
+
+      const d = sale.createdAt.toDate();
+
+      return d.getFullYear()+"-"+
+        String(d.getMonth()+1).padStart(2,"0")+"-"+
+        String(d.getDate()).padStart(2,"0");
+    }
+
+  }catch(e){}
+
+  /* 3. Fecha registrada por el dispositivo */
+  try{
+
+    if(sale.clientTime){
+
+      const d = new Date(sale.clientTime);
+
+      if(!isNaN(d.getTime())){
+
+        return d.getFullYear()+"-"+
+          String(d.getMonth()+1).padStart(2,"0")+"-"+
+          String(d.getDate()).padStart(2,"0");
+      }
+    }
+
+  }catch(e){}
+
+  return null;
+}
 
 /* =================================
    VALIDAR VENTA
