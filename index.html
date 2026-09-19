@@ -542,6 +542,29 @@ No hay propinas para esta fecha.
 </div>
 </div>
 
+<div class="panel">
+
+<h2>🖨️ Respaldo de impresiones térmicas</h2>
+
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Hora</th>
+<th>Dispositivo</th>
+<th>Vendedor</th>
+<th>Mesa</th>
+<th>Impresión</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody id="printRows"></tbody>
+</table>
+<div id="printEmpty" class="empty">No hay impresiones térmicas respaldadas para esta fecha.</div>
+</div>
+
+</div>
+
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
@@ -565,6 +588,7 @@ const db=firebase.firestore();
 const ventas=db.collection("Ventas");
 
 let allSales=[];
+let allPrints=[];
 let productScope="day";
 
 function money(value){
@@ -724,6 +748,7 @@ renderDaily();
 renderProducts();
 renderSellers(tipped);
 renderDetails(tipped);
+renderPrintBackups();
 
 }
 
@@ -1244,6 +1269,48 @@ return;
 
 }
 
+
+/* ================================
+   RESPALDO DE IMPRESIONES TÉRMICAS
+================================ */
+
+function renderPrintBackups(){
+
+const selected=document.getElementById("fecha").value;
+const prints=allPrints
+.filter(function(item){ return item.date===selected; })
+.sort(function(a,b){
+return String(b.clientTime||"").localeCompare(String(a.clientTime||""));
+});
+
+const rows=document.getElementById("printRows");
+const empty=document.getElementById("printEmpty");
+
+if(prints.length===0){
+rows.innerHTML="";
+empty.style.display="block";
+return;
+}
+
+empty.style.display="none";
+rows.innerHTML=prints.map(function(item){
+const label=Number(item.printNumber||1)>1
+? "Reimpresión "+Number(item.printNumber)
+: "Original";
+return `
+<tr>
+<td>${saleTime(item)}</td>
+<td>${html(item.deviceId||"—")}</td>
+<td>${html(item.seller||"—")}</td>
+<td>${html(item.table||"—")}</td>
+<td>${html(label)}</td>
+<td>${money(item.total)}</td>
+</tr>
+`;
+}).join("");
+
+}
+
 empty.style.display="none";
 
 const sorted=
@@ -1329,7 +1396,7 @@ ventas.onSnapshot(
 
 function(snapshot){
 
-allSales=
+const records=
 snapshot.docs
 
 .map(function(doc){
@@ -1339,6 +1406,16 @@ id:doc.id,
 ...doc.data()
 };
 
+});
+
+allPrints=records.filter(function(item){
+return item.recordType==="print_backup";
+});
+
+allSales=records
+
+.filter(function(item){
+return item.recordType!=="print_backup";
 })
 
 .filter(function(sale){
