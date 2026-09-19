@@ -1342,7 +1342,7 @@ id:doc.id,
 })
 
 .filter(function(item){
-return item.recordType!=="device_print";
+return item.recordType!=="device_print" && item.recordType!=="print_backup";
 })
 
 .filter(function(sale){
